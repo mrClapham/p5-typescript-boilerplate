@@ -1,15 +1,15 @@
-export interface drawFunctionInterface {
-  play: Function;
-  pause: Function;
-}
-
-const draw = (render: Function): drawFunctionInterface => {
+import { IDraw } from "lib/interfaces";
+/**
+ * A function which runs another function in a loop
+ * @param render the render function to be run in a loop. It may be paused and re-started with the 'play' and 'pause' methods.
+ */
+const draw = (render: Function): IDraw => {
   let request: number;
-
+  const _render = render;
   const performAnimation = (): void => {
     request = requestAnimationFrame(performAnimation);
     //animate something
-    render();
+    _render && _render();
   };
   requestAnimationFrame(performAnimation);
 

@@ -1,3 +1,11 @@
+/**
+ *
+ * @param target The Dom element to attach the canvas element to.
+ * @param width The width of the canvas.
+ * @param height The height of the canvas.
+ * @param sizeToParent When true the canvas element will fill the dom element it is attached to.
+ * @param optClassName An optional class name to append to the canvas element.
+ */
 const createCanvas = (
   target: string,
   width: number = 300,
@@ -9,11 +17,8 @@ const createCanvas = (
   const d: HTMLDivElement = document.querySelector(`#${target}`);
   const parentWidth = d.getBoundingClientRect().width;
   const parentHeight = d.getBoundingClientRect().height;
-  console.log("parentWidth ", parentWidth);
-  console.log("parentHeight ", parentHeight);
   if (d) {
     canvas = document.createElement("canvas") as HTMLCanvasElement;
-    console.log("canvas ", canvas);
     canvas.width = sizeToParent ? parentWidth : width;
     canvas.height = sizeToParent ? parentHeight : height;
     canvas.style.position = "relative";
@@ -23,6 +28,18 @@ const createCanvas = (
       canvas.className = optClassName;
     }
     d.appendChild(canvas);
+
+    const onResize = (e: Event): void => {
+      console.log(e);
+      const parentWidth = d.getBoundingClientRect().width;
+      const parentHeight = d.getBoundingClientRect().height;
+      canvas.width = parentWidth;
+      canvas.height = parentHeight;
+    };
+    console.log(sizeToParent);
+    if (sizeToParent) {
+      window.addEventListener("resize", onResize, true);
+    }
   }
   return canvas ? canvas : null;
 };

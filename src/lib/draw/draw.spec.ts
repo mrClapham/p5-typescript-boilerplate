@@ -2,7 +2,7 @@
  * @jest-environment jsdom
  */
 
-import { draw } from "./draw";
+import { draw } from ".";
 
 const mockCallback = jest.fn(() => true);
 

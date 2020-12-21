@@ -1,6 +1,7 @@
-import { createCanvas } from "../..";
-import { draw, drawFunctionInterface } from "../..";
-import { mousePositionListener } from "../listeners";
+import { createCanvas } from "lib/createCanvas";
+import { draw } from "lib/draw";
+import { IDraw } from "lib/interfaces";
+import { mousePositionListener } from "lib/listeners";
 
 /**
  *
@@ -19,7 +20,7 @@ const render: Function = (canvas: HTMLCanvasElement) => {
   return () => {
     const { clientWidth, clientHeight } = canvas;
     context.clearRect(0, 0, clientWidth, clientHeight);
-    context.fillStyle = "#ff00ff";
+    context.fillStyle = "#000000";
     context.fillRect(0, 0, mouseX, mouseY);
   };
 };
@@ -28,7 +29,7 @@ const simpleMouseTrack = (
   target: string,
   width: number = 900,
   height: number = 900
-): drawFunctionInterface => {
+): IDraw => {
   const canvas: HTMLCanvasElement = createCanvas(target, width, height, true);
 
   const { pause, play } = draw(render(canvas));

@@ -1,8 +1,6 @@
-import { simpleMouseTrack } from "./index";
-document.addEventListener("DOMContentLoaded", () => {
-  simpleMouseTrack("rootMouseTrack");
+import p5 from "p5";
+import circlesDemo from "./sketch/circle-demo";
 
-  const { pause, play } = simpleMouseTrack("root");
-  setTimeout(pause, 4000);
-  setTimeout(play, 6000);
+document.addEventListener("DOMContentLoaded", () => {
+  const sketchInstance = new p5(circlesDemo, "root");
 });

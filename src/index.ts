@@ -1,5 +1,6 @@
-export * from "./lib/createCanvas/createCanvas";
-export * from "./lib/draw/draw";
-export * from "./lib/listeners";
+export * from "lib/createCanvas";
+export * from "lib/draw";
+export * from "lib/listeners";
+export * from "lib/factories";
 
-export * from "./lib/simpleMouseTrack/index";
+export * from "./lib/simpleMouseTrack";

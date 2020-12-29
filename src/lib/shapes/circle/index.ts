@@ -1,8 +1,8 @@
 import { IShape } from "lib/interfaces";
 import { rgbaColor } from "lib/color";
 
-let width: number = 40;
-let height: number = 40;
+const width = 40;
+const height = 40;
 
 export default (ctx: CanvasRenderingContext2D): Function => (
   config: IShape = {

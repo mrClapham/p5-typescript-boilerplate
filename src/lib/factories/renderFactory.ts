@@ -3,9 +3,9 @@ import { draw } from "lib/draw";
 
 const renderFactory = (renderer: Function) => (
   target: HTMLElement,
-  width: number = 200,
-  height: number = 200,
-  sizeToParent: boolean = true,
+  width = 200,
+  height = 200,
+  sizeToParent = true,
   optClassName: string | null = null
 ) => {
   const canvas: HTMLCanvasElement = createCanvas(

@@ -1,22 +1,24 @@
-import p5 from "p5";
-import particleCirc from "./particle-circ";
+import {create} from "./particle-circ";
+import * as p5 from 'p5';
 
-export default (s) => {
+const particles = []
+
+export default (s: p5) => {
   let x = 20;
-  let pc;
-
+  const { createVector } = s;
   s.setup = () => {
-    let pVector = p5.createVector(10, 20);
-    console.log(pVector);
-
-    s.createCanvas(600, 600);
-    pc = particleCirc(createVector(10, 20));
+    const pVector = createVector(400, 500);
+    for(let i=0; i<100; i++){
+      particles.push(create(pVector, s));
+    }
+    s.createCanvas(1000, 1000);
   };
 
   s.draw = () => {
     x++;
-    s.background(0);
-    s.circle(x, 100, 100);
-    pc.display();
+    // s.background(0);
+     particles.forEach(element => {
+       element.display(s);
+     });
   };
 };

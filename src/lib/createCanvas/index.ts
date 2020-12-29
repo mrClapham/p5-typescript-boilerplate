@@ -8,9 +8,9 @@
  */
 const createCanvas = (
   target: string,
-  width: number = 300,
-  height: number = 300,
-  sizeToParent: boolean = true,
+  width = 300,
+  height = 300,
+  sizeToParent = true,
   optClassName: string | null = null
 ): HTMLCanvasElement | null => {
   let canvas: HTMLCanvasElement;

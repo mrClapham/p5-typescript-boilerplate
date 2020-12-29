@@ -1,11 +1,11 @@
 import circle from "lib/shapes/circle";
 import { IShape } from "lib/interfaces";
 
-let xPos: number = 0;
-let yPos: number = 0;
-let xStep: number = 1;
-let yStep: number = 1;
-let rotate: number = 1;
+let xPos = 0;
+let yPos = 0;
+let xStep = 1;
+let yStep = 1;
+let rotate = 1;
 
 const simpleCircleRenderer = (canvas: HTMLCanvasElement): Function => {
   const context: CanvasRenderingContext2D = canvas.getContext("2d");

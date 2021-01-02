@@ -4,7 +4,7 @@ import { IForcable } from './attractor-node'
 const create = (position, s: p5): Object => {
   let force: p5.Vector | null
   let sketch: p5 | null = null
-  let strength: number = 0.25
+  const strength = 0.25
 
   let velocity: p5.Vector | null
   let accelleration: p5.Vector | null

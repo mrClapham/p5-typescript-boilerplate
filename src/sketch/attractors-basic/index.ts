@@ -2,10 +2,10 @@ import * as p5 from 'p5'
 import { create as createNode } from './attractor-node'
 import { create as creatAttractor } from './attractor'
 const nodes = []
-let att1 = null
-let att2 = null
-let att1Vector = null
-let att2Vector = null
+const att1 = null
+const att2 = null
+const att1Vector = null
+const att2Vector = null
 
 export default (s: p5) => {
   const { createVector } = s
@@ -17,7 +17,7 @@ export default (s: p5) => {
   // }
   s.setup = () => {
     s.createCanvas(600, 600)
-    for(let i:number = 0; i< 6; i++){
+    for(let i = 0; i< 6; i++){
       const origin =  Math.random() * 100
       const middle = s.createVector( s.width/2, s.height/2 ) 
       console.log(`orogin: ${origin}`)

@@ -2,7 +2,7 @@ import { createCanvas } from "lib/createCanvas";
 import { draw } from "lib/draw";
 
 const renderFactory = (renderer: Function) => (
-  target: HTMLElement,
+  target: string,
   width = 200,
   height = 200,
   sizeToParent = true,
@@ -15,7 +15,6 @@ const renderFactory = (renderer: Function) => (
     sizeToParent,
     optClassName
   );
-  console.log("TARGET :: ", target);
 
   return draw(renderer(canvas));
 };

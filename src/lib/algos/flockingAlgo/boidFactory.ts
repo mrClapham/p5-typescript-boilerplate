@@ -1,16 +1,16 @@
-import { IBoid } from "lib/interfaces";
+import { IBoid, IBoidAttractorConfig, IBoidAttractor, IBoidConfig, IRunConfig } from 'lib/interfaces';
 import * as p5 from "p5";
 import { Vector } from "p5";
-import { IBoidConfig, IRunConfig } from "lib/interfaces";
 
 const defaultConfig: IBoidConfig = {
     r: 3.0,
-    maxspeed: 4,
+    maxspeed: .75,
     maxforce: 0.25
 }
 
 const targVector = new Vector();
-targVector.set(0, 0, 0)
+targVector.set(0, 0, 0);
+
 const defaultRunConfig: IRunConfig = {
     width: 100,
     height: 100,
@@ -136,11 +136,8 @@ export const makeBoid = (
             }
             if (count > 0) {
                 sum.div(count);
-
                 const seeker = this.seek(sum);
-                console.log(" seeker :: ", seeker);
                 return seeker;  // Steer towards the location
-
             } else {
                 const sum = new Vector();
                 sum.set(0, 0, 0,)
@@ -169,14 +166,12 @@ export const makeBoid = (
             //
             const desired = Vector.sub(targ, _pos);  // A vector pointing from the location to the target
 
-            //     console.log('DESIRED ', desired);
             // Normalize desired and scale to maximum speed
             desired.normalize();
             desired.mult(maxspeed);
             // Steering = Desired minus Velocity
             const steer = Vector.sub(desired, _velocity);
             steer.limit(maxforce);  // Limit to maximum steering force
-            console.log('STEER ::: ', steer);
             return steer;
         },
         /// BORDERS
@@ -249,7 +244,6 @@ export const create = (pos: [number, number, number] = [10, 10, 0]): IBoid => {
     startPos.set(x, y, z);
     const vel: p5.Vector = p5.Vector.random3D();
     const acc: p5.Vector = p5.Vector.random3D();
-    console.log('Creating startVel :: ', vel)
 
     return makeBoid(
         startPos, vel, acc

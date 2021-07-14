@@ -1,5 +1,7 @@
-import { create as createBoid } from 'lib/algos/flockingAlgo/boidFactory'
-import { IBoid, IFlock, IPoint3d } from 'lib/interfaces';
+import { create as createBoid } from 'lib/algos/flockingAlgo/boidFactory';
+import { create as createBoidAttractor } from 'lib/algos/flockingAlgo/boidAttractorFactory';
+
+import { IBoid, IBoidAttractor, IFlock, IPoint3d, IBoidAttractorConfig } from 'lib/interfaces';
 import { Vector } from 'p5';
 
 
@@ -28,14 +30,23 @@ export default (width = 100,
     depth = 10,
     numBoids = 20,
     target: Vector,
-    obstacles = true,
-    numObstacles = 2
+
 ): IFlock => {
+
+    const att1 = createBoidAttractor(600, 600, 0, 130, 14);
+
     let _target = target;
     const _width = width;
     const _height = height;
+    const _depth = depth;
     const startPos: [number, number, number] = [width / 2, height / 2, depth]
     const boids: IBoid[] = [];
+    /////------
+    /////------
+    /////------
+    /////------
+    /////------
+    let attractors: IBoidAttractor[] = []
     for (let i = 0; i < numBoids; i++) {
         boids.push(createBoid(startPos))
     }
@@ -54,11 +65,22 @@ export default (width = 100,
         getTarget(): Vector {
             return _target;
         },
+        addAttractor(config: Partial<IBoidAttractorConfig>): IBoidAttractor {
+            const att = createBoidAttractor(config);
+            attractors.push(att);
+            return att;
+        },
+        removeAttractor(value: IBoidAttractor): void {
+            attractors = attractors.filter(d => d !== value);
+        },
+        getAttractors() {
+            return attractors
+        },
         run(): void {
-            boids.forEach(b => b.run(boids, { width: _width, height: _height, target: _target }))
+            boids.forEach(b => b.run(boids, { width: _width, height: _height, depth: _depth, target: _target }))
+            attractors.forEach(a => a.run(boids));
         }
     }
-
 }
 
 

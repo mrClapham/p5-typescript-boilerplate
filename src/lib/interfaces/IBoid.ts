@@ -6,7 +6,7 @@ interface IBoidConfig {
     maxforce: number
 }
 
-interface IRunConfig { width: number, height: number, target: Vector }
+interface IRunConfig { width: number, height: number, depth: number, target: Vector }
 
 interface IBoid extends IBoidConfig {
     acceleration: Vector,

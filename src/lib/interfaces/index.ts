@@ -5,3 +5,5 @@ export * from "lib/interfaces/IBoid";
 export * from "lib/interfaces/IPoint3d";
 export * from "lib/interfaces/IPoint";
 export * from "lib/interfaces/IFlock";
+export * from "lib/interfaces/IBoidAttractor";
+export * from "lib/interfaces/IBoidAttractorConfig";

@@ -1,45 +1,23 @@
-import { create as createBoid } from 'lib/algos/flockingAlgo/boidFactory';
+import { create as createBoid, defaultConfig as boidDefaultConfig } from 'lib/algos/flockingAlgo/boidFactory';
 import { create as createBoidAttractor } from 'lib/algos/flockingAlgo/boidAttractorFactory';
 
-import { IBoid, IBoidAttractor, IFlock, IPoint3d, IBoidAttractorConfig } from 'lib/interfaces';
+import { IBoid, IBoidAttractor, IFlock, IPoint3d, IBoidAttractorConfig, IBoidConfig } from 'lib/interfaces';
 import { Vector } from 'p5';
-
-
-export const setAttractorGrid = (width = 100, height = 100, xDivs = 10, yDivs = 10): { x: number, y: number }[][] => {
-    const xstep = width / (xDivs + 1);
-    const ystep = height / (yDivs + 1);
-    const _grid = [];
-    for (let i = 0; i < yDivs; i++) {
-        const _rowX = []
-        for (let ii = 0; ii < xDivs; ii++) {
-            let xp: number, yp: number, rep: number;
-            xp = xstep + (xstep * i);
-            yp = ystep + (xstep * ii);
-            rep = (0.1 + Math.random() * .009)
-            _rowX.push({ x: xp, y: yp });
-            // this.addAttractor(xp, yp, { repulsion: rep, excusionZone: Math.random() * 80 });
-        }
-        _grid.push(_rowX)
-    }
-    return _grid
-}
-
 
 export default (width = 100,
     height = 100,
     depth = 10,
     numBoids = 20,
-    target: Vector,
+    boidsConfig: Partial<IBoidConfig> = boidDefaultConfig
 
 ): IFlock => {
 
-    const att1 = createBoidAttractor(600, 600, 0, 130, 14);
-
-    let _target = target;
-    const _width = width;
-    const _height = height;
-    const _depth = depth;
+    let _target = new Vector();
+    let _width = width;
+    let _height = height;
+    let _depth = depth;
     const startPos: [number, number, number] = [width / 2, height / 2, depth]
+    const _boidConfig = { ...boidDefaultConfig, ...boidsConfig }
     const boids: IBoid[] = [];
     /////------
     /////------
@@ -48,7 +26,7 @@ export default (width = 100,
     /////------
     let attractors: IBoidAttractor[] = []
     for (let i = 0; i < numBoids; i++) {
-        boids.push(createBoid(startPos))
+        boids.push(createBoid(startPos, _boidConfig))
     }
 
     return {
@@ -56,14 +34,33 @@ export default (width = 100,
         getPositions(): IPoint3d[] {
             return boids.map(({ getPosition }) => {
                 const { x, y, z } = getPosition();
-                return { x, y, z }
-            })
+                const rotation = getPosition().heading();
+                return { x, y, z, rotation }
+            });
         },
         setTarget(value: Vector): void {
             _target = value;
         },
         getTarget(): Vector {
             return _target;
+        },
+        setWidth(value: number): void {
+            _width = value;
+        },
+        getWidth(): number {
+            return _width;
+        },
+        setHeight(value: number): void {
+            _height = value;
+        },
+        getHeight(): number {
+            return _height;
+        },
+        setDepth(value: number): void {
+            _depth = value;
+        },
+        getDepth(): number {
+            return _depth;
         },
         addAttractor(config: Partial<IBoidAttractorConfig>): IBoidAttractor {
             const att = createBoidAttractor(config);
@@ -76,8 +73,28 @@ export default (width = 100,
         getAttractors() {
             return attractors
         },
+        //// -- BOUD GETTERS AND SETTERS 
+        setBoidCohesionDistance(value: number): void {
+            boids.forEach(b => b.setCohesionDistance(value));
+        },
+        getBoidCohesionDistance(): number {
+            return boids[0].getCohesionDistance()
+        },
+        setBoidMaxSpeed(value: number): void {
+            boids.forEach(b => b.setMaxSpeed(value));
+        },
+        getBoidMaxSpeed(): number {
+            return boids[0].getMaxSpeed();
+        },
+        setBoidMaxForce(value: number): void {
+            boids.forEach(b => b.setMaxForce(value));
+        },
+        getBoidMaxForce(): number {
+            return boids[0].getMaxForce();
+        },
+
         run(): void {
-            boids.forEach(b => b.run(boids, { width: _width, height: _height, depth: _depth, target: _target }))
+            boids.forEach(b => b.run(boids, { width: _width, height: _height, depth: _depth }))
             attractors.forEach(a => a.run(boids));
         }
     }

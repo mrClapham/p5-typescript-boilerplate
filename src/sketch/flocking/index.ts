@@ -1,7 +1,16 @@
 import * as p5 from 'p5';
-import flockingAlgo, { setAttractorGrid } from 'lib/algos/flockingAlgo';
+import flockingAlgo from 'lib/algos/flockingAlgo';
+import { defaultConfig as defaultBoidConfig } from 'lib/algos/flockingAlgo/boidFactory';
 import { Vector } from 'p5';
-import { IBoidAttractor } from 'lib/interfaces';
+import { IBoidAttractor, IBoidConfig } from 'lib/interfaces';
+
+import * as dat from 'dat.gui';
+
+// const folder1 = gui.addFolder('Flow Field');
+
+//  const person = { name: 'Sam' };
+// gui.add(person, 'name');
+
 ///////////////////////////////////////
 ///////////////////////////////////////
 ///////////////////////////////////////
@@ -13,57 +22,103 @@ import { IBoidAttractor } from 'lib/interfaces';
 ///////////////////////////////////////
 ///////////////////////////////////////
 ///////////////////////////////////////
-const fps = 60
-const defaultConfig = { width: 1000, height: 1000, depth: 0, numBoids: 70 }
+const fps = 60;
 
-export default (overrides = {}) => (s: p5): void => {
-    const { width, height, depth, numBoids } = { ...defaultConfig, ...overrides }
-    //let flockGrid: IPoint[][] = []
-    const targ = new Vector();
-    targ.set(100, 100, 100)
-    const flock = flockingAlgo(width, height, depth, numBoids, targ);
+const defaultConfig = {
+    width: 1000,
+    height: 1000,
+    depth: 10,
+    numBoids: 30,
+
+};
+
+// export const createAttractorGrid = (width = 100, height = 100, xDivs = 10, yDivs = 10): { x: number, y: number }[][] => {
+//     const xstep = width / (xDivs + 1);
+//     const ystep = height / (yDivs + 1);
+//     const _grid = [];
+//     for (let i = 0; i < yDivs; i++) {
+//         const _rowX = []
+//         for (let ii = 0; ii < xDivs; ii++) {
+//             const xp: number = xstep + (xstep * i);
+//             const yp: number = ystep + (xstep * ii);
+//             const rep: number = (0.1 + Math.random() * .009);
+//             _rowX.push({ x: xp, y: yp });
+//             //this.addAttractor(xp, yp, { repulsion: rep, excusionZone: Math.random() * 80 });
+//         }
+//         _grid.push(_rowX)
+//     }
+//     return _grid
+// }
+
+export default (overrides = {}, boidConfig: IBoidConfig = defaultBoidConfig) => (s: p5): void => {
+
+    const props = { ...defaultConfig, ...overrides, ...boidConfig };
+    const { width, height, depth, numBoids } = props;
+
+    const flock = flockingAlgo(width, height, depth, numBoids, boidConfig);
     flock.addAttractor({ xPos: 300, yPos: 300, excusionZone: 40, attraction: 4 });
-    const mouseTracker: IBoidAttractor = flock.addAttractor({ xPos: 300, yPos: 300, excusionZone: 50, attraction: -.02 });
 
-    let mouseX = 0;
-    let mouseY = 0;
+    const positiveMouseAttraction = -.03;
+    const negativeMouseAttraction = 2;
+    const mouseTracker: IBoidAttractor = flock.addAttractor({ xPos: 300, yPos: 300, excusionZone: 50, attraction: positiveMouseAttraction });
 
-    const onMouseMove = e => {
+    const onMouseMove = (e): void => {
         const { clientX, clientY } = e;
-        mouseX = clientX;
-        mouseY = clientY;
         const vec = new Vector();
         vec.set(clientX, clientY, 0)
         mouseTracker.setPosition(vec);
     }
 
-    s.setup = () => {
-        //flockGrid = setAttractorGrid();
-        const canv = s.createCanvas(width, height);
-        canv.mouseMoved(onMouseMove)
-        s.frameRate(fps);
+    const onMouseDown = (): void => {
+        mouseTracker.setAttraction(negativeMouseAttraction);
+    }
 
+    const onMouseUp = (): void => {
+        mouseTracker.setAttraction(positiveMouseAttraction);
+    }
+
+    s.setup = (): void => {
+        const canv = s.createCanvas(width, height);
+        canv.mouseMoved(onMouseMove);
+        canv.mousePressed(onMouseDown);
+        canv.mouseReleased(onMouseUp);
+        s.frameRate(fps);
+        //--DAT gui
+        const gui = new dat.GUI({ name: 'Flocking GUI' });
+        gui.add(props, 'width', 100, 1000, 10)
+            .name('canvas width')
+            .onChange(() => flock.setWidth(props.width));
+        gui.add(props, 'height', 100, 1000, 10)
+            .name('canvas height')
+            .onChange(() => flock.setHeight(props.height));
+        gui.add(props, 'depth', 100, 1000, 10)
+            .name('canvas depth')
+            .onChange(() => flock.setHeight(props.height));
+        gui.add(props, 'depth', 100, 1000, 10)
+            .name('canvas depth')
+            .onChange(() => flock.setHeight(props.height));
+        gui.add(props, 'coheisionDistance', 1, 1500, 1)
+            .name('coheision distance')
+            .onChange(() => flock.setBoidCohesionDistance(props.coheisionDistance));
+        gui.add(props, 'maxspeed', 0.1, 10, .1)
+            .name('Max Speed')
+            .onChange(() => flock.setBoidMaxSpeed(props.maxspeed));
+        gui.add(props, 'maxforce', 0.01, 1, .01)
+            .name('Max Force')
+            .onChange(() => flock.setBoidMaxForce(props.maxforce));
     };
 
     s.draw = () => {
         flock.run();
         // s.clear()
-        s.background('rgba(225,255,0, 0.005)');
+        s.background('rgba(225,255,255, 0.05)');
 
 
-        // flockGrid.forEach((element: IPoint[]): void => {
-        //     element.forEach((element2: IPoint): void => {
-        //         s.stroke(200, 255);
-        //         s.strokeWeight(2);
-        //         s.fill(127, 222, 222);
-        //         s.ellipse(element2.x * 10, element2.y * 10, 12, 12);
-        //     })
-        // });
         flock.getPositions().forEach(p => {
-            s.stroke(255, 0, 100);
+            s.stroke("#00ff00");
             s.strokeWeight(1);
-            s.fill(255, 0, 255);
-            s.ellipse(p.x, p.y, .3 * -p.z, .3 * -p.z);
+            s.fill("#ffff00");
+            s.ellipse(p.x, p.y, defaultConfig.depth / 2 - (p.z * -1), defaultConfig.depth / 2 - (p.z * -1));
         })
 
         // flock.getAttractors().forEach(a => {
@@ -81,7 +136,6 @@ export default (overrides = {}) => (s: p5): void => {
         // flock.setTarget(mouseVector);
         // const { x, y } = flock.getTarget();
         // s.ellipse(x, y, 20, 20);
-
 
     };
 };

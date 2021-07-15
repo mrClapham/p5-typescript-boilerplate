@@ -1,21 +1,18 @@
-import { IBoid, IBoidAttractorConfig, IBoidAttractor, IBoidConfig, IRunConfig } from 'lib/interfaces';
+import { IBoid, IBoidConfig, IRunConfig } from 'lib/interfaces';
 import * as p5 from "p5";
 import { Vector } from "p5";
 
-const defaultConfig: IBoidConfig = {
-    r: 3.0,
+export const defaultConfig: IBoidConfig = {
+    r: 1.0,
     maxspeed: .75,
-    maxforce: 0.25
+    maxforce: 0.25,
+    coheisionDistance: 50,
 }
-
-const targVector = new Vector();
-targVector.set(0, 0, 0);
 
 const defaultRunConfig: IRunConfig = {
     width: 100,
     height: 100,
-    depth: 50,
-    target: targVector
+    depth: 50
 }
 
 export const makeBoid = (
@@ -30,25 +27,32 @@ export const makeBoid = (
     let _velocity = velocity;
     const _bounceBorders = true;
     // run config
-    const { width, height, depth, target } = runConfig
+    const { width, height, depth } = runConfig
     let _width = width;
     let _height = height;
-    const _depth = depth
-    let _target = target;
+    let _depth = depth;
+
+    const _config: IBoidConfig = { ...defaultConfig, ...config };
 
     const { r,
         maxspeed,
-        maxforce } = config;
+        maxforce,
+        coheisionDistance
+    } = _config;
+
+    let _coheisionDistance = coheisionDistance;
+    let _maxspeed = maxspeed;
+    let _maxforce = maxforce;
 
     return {
         acceleration,
         ...{ defaultConfig, ...config },
         //// RUN
         run(boids: IBoid[], runConfig: IRunConfig): void {
-            const { width, height, target } = runConfig;
+            const { width, height, depth } = runConfig;
             _width = width;
             _height = height;
-            _target = target;
+            _depth = depth;
             this.flock(boids);
             this.borders();
             this.update();
@@ -87,9 +91,9 @@ export const makeBoid = (
             if (steer.mag() > 0) {
                 // Implement Reynolds: Steering = Desired - Velocity
                 steer.normalize();
-                steer.mult(maxspeed);
+                steer.mult(_maxspeed);
                 steer.sub(_velocity);
-                steer.limit(maxforce);
+                steer.limit(_maxforce);
             }
             return steer;
         },
@@ -109,9 +113,9 @@ export const makeBoid = (
             if (count > 0) {
                 sum.div(count);
                 sum.normalize();
-                sum.mult(maxspeed);
+                sum.mult(_maxspeed);
                 const steer: Vector = Vector.sub(sum, this.velocity);
-                steer.limit(this.maxforce);
+                steer.limit(_maxforce);
                 return steer;
             } else {
                 const steer = new Vector();
@@ -122,14 +126,13 @@ export const makeBoid = (
 
         //// COHEASON
         cohesion(boids: IBoid[]): Vector {
-            const neighbordist = 50;
             const sum = new Vector();
             sum.set(0, 0, 0);
             // Start with empty vector to accumulate all locations
             let count = 0;
             for (let i = 0; i < boids.length; i++) {
                 const d = _pos.dist(boids[i].getPosition());
-                if ((d > 0) && (d < neighbordist)) {
+                if ((d > 0) && (d < _coheisionDistance)) {
                     sum.add(boids[i].getPosition()); // Add location
                     count++;
                 }
@@ -168,48 +171,52 @@ export const makeBoid = (
 
             // Normalize desired and scale to maximum speed
             desired.normalize();
-            desired.mult(maxspeed);
+            desired.mult(_maxspeed);
             // Steering = Desired minus Velocity
             const steer = Vector.sub(desired, _velocity);
-            steer.limit(maxforce);  // Limit to maximum steering force
+            steer.limit(_maxforce);  // Limit to maximum steering force
             return steer;
         },
         /// BORDERS
         borders(): void {
             if (_bounceBorders) {
-                if (_pos.x < -this.r) {
-                    _pos.x = this.r;
+                if (_pos.x < -r) {
+                    _pos.x = r;
                     _velocity.x *= -1
                 }
-                if (_pos.y < -this.r) {
-                    _pos.y = this.r;
+                if (_pos.y < -r) {
+                    _pos.y = r;
                     _velocity.y *= -1
                 }
                 /////////
-                if (_pos.z < -this.r) {
-                    _pos.z = this.r;
+                if (_pos.z < -r) {
+                    _pos.z = r;
                     _velocity.z *= -1
                 }
                 //////// ------------- ////////
                 //////// ------------- ////////
-                if (_pos.x > _width + this.r) {
-                    _pos.x = _width - this.r;
-                    this.velocity.x *= -1
+                if (_pos.x > _width + r) {
+                    _pos.x = _width - r;
+                    _velocity.x *= -1
                 }
-                if (_pos.y > _height + this.r) {
-                    _pos.y = _height - this.r;
-                    this.velocity.y *= -1
+                if (_pos.y > _height + r) {
+                    _pos.y = _height - r;
+                    _velocity.y *= -1
                 }
                 ////////
-                if (_pos.z > _depth + this.r) {
-                    _pos.z = _depth - this.r;
-                    this.velocity.z *= -1
+                if (_pos.z > _depth + r) {
+                    _pos.z = _depth - r;
+                    _velocity.z *= -1
                 }
             } else {
-                if (_pos.x < -this.r) _pos.x = _width + this.r;
-                if (_pos.y < -this.r) _pos.y = _height + this.r;
-                if (_pos.x > _width + this.r) _pos.x = -this.r;
-                if (_pos.y > _height + this.r) _pos.y = -this.r;
+                if (_pos.x < -r) _pos.x = _width + r;
+                if (_pos.y < -r) _pos.y = _height + r;
+                if (_pos.z < -r) _pos.z = _depth + r;
+
+                if (_pos.x > _width + r) _pos.x = -r;
+                if (_pos.y > _height + r) _pos.y = -r;
+                if (_pos.z > _depth + r) _pos.z = -r;
+
             }
         },
         /// UPDATE
@@ -217,7 +224,7 @@ export const makeBoid = (
             // Update velocity
             _velocity.add(this.acceleration);
             // Limit speed
-            _velocity.limit(this.maxspeed);
+            _velocity.limit(_maxspeed);
             _pos.add(_velocity);
             // Reset accelertion to 0 each cycle
             this.acceleration.mult(0);
@@ -234,18 +241,39 @@ export const makeBoid = (
         },
         set velocity(value: Vector) {
             _velocity = value;
+        },
+        //=== PUBLIC API ====
+
+        setCohesionDistance(value: number): void {
+            _coheisionDistance = value;
+        },
+        getCohesionDistance(): number {
+            return _coheisionDistance;
+        },
+        setMaxSpeed(value: number): void {
+            _maxspeed = value
+        },
+        getMaxSpeed(): number {
+            return _maxspeed;
+        },
+        setMaxForce(value: number): void {
+            _maxforce = value
+        },
+        getMaxForce(): number {
+            return _maxforce;
         }
     }
 }
 
-export const create = (pos: [number, number, number] = [10, 10, 0]): IBoid => {
+export const create = (pos: [number, number, number] = [10, 10, 0], config: Partial<IBoidConfig> = {}): IBoid => {
     const [x, y, z] = pos
     const startPos: p5.Vector = new p5.Vector();
     startPos.set(x, y, z);
     const vel: p5.Vector = p5.Vector.random3D();
     const acc: p5.Vector = p5.Vector.random3D();
+    const boidConfig: IBoidConfig = { ...defaultConfig, ...config }
 
     return makeBoid(
-        startPos, vel, acc
+        startPos, vel, acc, boidConfig
     );
 }

@@ -3,10 +3,15 @@ import { Vector } from "p5";
 interface IBoidConfig {
     r: number,
     maxspeed: number,  // Maximum speed
-    maxforce: number
+    maxforce: number,
+    coheisionDistance: number,
 }
 
-interface IRunConfig { width: number, height: number, depth: number, target: Vector }
+interface IRunConfig {
+    width: number,
+    height: number,
+    depth: number
+}
 
 interface IBoid extends IBoidConfig {
     acceleration: Vector,
@@ -21,7 +26,14 @@ interface IBoid extends IBoidConfig {
     update(): void,
     getPosition(): Vector,
     setPosition(value: Vector): void,
-    velocity: Vector
+    velocity: Vector,
+    setCohesionDistance(value: number): void,
+    getCohesionDistance(): number,
+    setMaxSpeed(value: number): void,
+    getMaxSpeed(): number,
+    setMaxForce(value: number): void,
+    getMaxForce(): number,
+
 }
 
 export { IBoid, IBoidConfig, IRunConfig }

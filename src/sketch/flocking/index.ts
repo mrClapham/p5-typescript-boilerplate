@@ -6,10 +6,6 @@ import { IBoidAttractor, IBoidConfig } from 'lib/interfaces';
 
 import * as dat from 'dat.gui';
 
-// const folder1 = gui.addFolder('Flow Field');
-
-//  const person = { name: 'Sam' };
-// gui.add(person, 'name');
 
 ///////////////////////////////////////
 ///////////////////////////////////////
@@ -91,12 +87,9 @@ export default (overrides = {}, boidConfig: IBoidConfig = defaultBoidConfig) => 
         gui.add(props, 'height', 100, 1000, 10)
             .name('canvas height')
             .onChange(() => flock.setHeight(props.height));
-        gui.add(props, 'depth', 100, 1000, 10)
+        gui.add(props, 'depth', 0, 300, 10)
             .name('canvas depth')
-            .onChange(() => flock.setHeight(props.height));
-        gui.add(props, 'depth', 100, 1000, 10)
-            .name('canvas depth')
-            .onChange(() => flock.setHeight(props.height));
+            .onChange(() => flock.setDepth(props.depth));
         gui.add(props, 'coheisionDistance', 1, 1500, 1)
             .name('coheision distance')
             .onChange(() => flock.setBoidCohesionDistance(props.coheisionDistance));

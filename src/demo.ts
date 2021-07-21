@@ -7,6 +7,6 @@ import flocking from './sketch/flocking'
 document.addEventListener("DOMContentLoaded", () => {
   //const sketchInstance = new p5(circlesDemo, "root");
   //const attractorsInstance = new p5(attractorsBasic, "root");
-  //const perlinInstance = new p5(attractorPerlin({ width: 900, height: 600, gridX: 20, gridY: 20 }), "attractors");
+  const perlinInstance = new p5(attractorPerlin({ width: 900, height: 600, gridX: 20, gridY: 20 }), "root");
   const flockingInstance = new p5(flocking({ width: 900, height: 600 }), "attractors");
 });

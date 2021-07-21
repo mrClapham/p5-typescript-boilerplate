@@ -56,10 +56,10 @@ export default (overrides = {}, boidConfig: IBoidConfig = defaultBoidConfig) => 
     const { width, height, depth, numBoids } = props;
 
     const flock = flockingAlgo(width, height, depth, numBoids, boidConfig);
-    flock.addAttractor({ xPos: 300, yPos: 300, excusionZone: 40, attraction: 4 });
+    flock.addAttractor({ xPos: 300, yPos: 300, excusionZone: 40, attraction: -4 });
 
-    const positiveMouseAttraction = -.03;
-    const negativeMouseAttraction = 2;
+    const positiveMouseAttraction = 0.5;
+    const negativeMouseAttraction = -15;
     const mouseTracker: IBoidAttractor = flock.addAttractor({ xPos: 300, yPos: 300, excusionZone: 50, attraction: positiveMouseAttraction });
 
     const onMouseMove = (e): void => {
@@ -115,7 +115,7 @@ export default (overrides = {}, boidConfig: IBoidConfig = defaultBoidConfig) => 
 
 
         flock.getPositions().forEach(p => {
-            s.stroke("#00ff00");
+            s.stroke("#ff00ff");
             s.strokeWeight(1);
             s.fill("#ffff00");
             s.ellipse(p.x, p.y, defaultConfig.depth / 2 - (p.z * -1), defaultConfig.depth / 2 - (p.z * -1));

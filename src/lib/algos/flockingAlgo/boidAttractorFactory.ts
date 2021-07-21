@@ -20,7 +20,7 @@ export const create = (
         attraction
     } = { ...defaultConfig, ...config }
 
-    let _attraction = attraction
+    let _attraction = 0 - attraction
     let _excusionZone = excusionZone
     let _position = new Vector();
 
@@ -46,7 +46,7 @@ export const create = (
             return _excusionZone
         },
         setAttraction(value): void {
-            _attraction = value;
+            _attraction = 0 - value;
         },
         getAttraction(): number {
             return _attraction

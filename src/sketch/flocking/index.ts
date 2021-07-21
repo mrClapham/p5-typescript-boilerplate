@@ -83,7 +83,11 @@ export default (overrides = {}, boidConfig: IBoidConfig = defaultBoidConfig) => 
         const gui = new dat.GUI({ name: 'Flocking GUI' });
         gui.add(props, 'width', 100, 1000, 10)
             .name('canvas width')
-            .onChange(() => flock.setWidth(props.width));
+            .onChange(() => {
+                console.log(canv.elt)
+                s.resizeCanvas(props.width, props.height);
+                flock.setWidth(props.width);
+            });
         gui.add(props, 'height', 100, 1000, 10)
             .name('canvas height')
             .onChange(() => flock.setHeight(props.height));

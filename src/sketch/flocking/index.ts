@@ -58,10 +58,13 @@ export default (overrides = {}, boidConfig: IBoidConfig = defaultBoidConfig) => 
     const negativeMouseAttraction = -15;
     const mouseTracker: IBoidAttractor = flock.addAttractor({ xPos: 300, yPos: 300, excusionZone: 50, attraction: positiveMouseAttraction });
 
-    const onMouseMove = (e): void => {
-        const { clientX, clientY } = e;
+    const onMouseMove = (e: MouseEvent): void => {
+        const { clientX, clientY, offsetX, offsetY } = e;
+        const elementX = clientX - offsetX;
+        const elementY = clientY - offsetY;
+        console.log(elementX)
         const vec = new Vector();
-        vec.set(clientX, clientY, 0)
+        vec.set(elementX, elementY, 0)
         mouseTracker.setPosition(vec);
     }
 

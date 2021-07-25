@@ -1,5 +1,6 @@
 import { createCanvas } from "lib/createCanvas";
 import { draw } from "lib/draw";
+import { IDraw } from 'lib/interfaces';
 
 const renderFactory = (renderer: Function) => (
   target: string,
@@ -7,7 +8,7 @@ const renderFactory = (renderer: Function) => (
   height = 200,
   sizeToParent = true,
   optClassName: string | null = null
-) => {
+): IDraw => {
   const canvas: HTMLCanvasElement = createCanvas(
     target,
     width,

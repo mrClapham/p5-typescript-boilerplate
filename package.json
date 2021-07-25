@@ -1,5 +1,5 @@
 {
-  "name": "typescript-lib-boilerplate",
+  "name": "p5-typscript-boilerplate",
   "version": "1.0.0",
   "main": "build/index.js",
   "author": "Graham Clapham",

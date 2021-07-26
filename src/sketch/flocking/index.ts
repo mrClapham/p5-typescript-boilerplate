@@ -72,7 +72,8 @@ export default (overrides = {}, boidConfig: IBoidConfig = defaultBoidConfig) => 
 
     const onMouseMove = (e: MouseEvent): void => {
         const { clientX, clientY, target } = e;
-        const rect = target.getBoundingClientRect();
+        const t = target as HTMLCanvasElement;
+        const rect = t.getBoundingClientRect();
         const elementX = clientX - rect.left; //x position within the element.
         const elementY = clientY - rect.top;  //y position within the element.
         const vec = new Vector();

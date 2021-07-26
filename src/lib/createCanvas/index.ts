@@ -6,7 +6,7 @@
  * @param sizeToParent When true the canvas element will fill the dom element it is attached to.
  * @param optClassName An optional class name to append to the canvas element.
  */
-const createCanvas = (
+export default (
   target: string,
   width = 300,
   height = 300,
@@ -44,4 +44,3 @@ const createCanvas = (
   return canvas ? canvas : null;
 };
 
-export { createCanvas };

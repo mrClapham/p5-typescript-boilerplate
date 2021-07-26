@@ -15,10 +15,10 @@ export default (overrides = {}) => (s: p5) => {
 
   s.setup = (): void => {
     for (let i = 0; i < 10; i++) {
-      const v = new p5.Vector(width / 2, height / 2);
+      const v = new p5.Vector();
       particles[i] = create(v, s)
     }
-    const { noise, TWO_PI, PI } = s
+    const { noise, TWO_PI } = s
     const { Vector } = p5;
     for (let i = 0; i < gridY; i++) {
       const _grid = []

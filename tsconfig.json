@@ -3,6 +3,12 @@
     "target": "ES6",
     "module": "commonjs",
     "baseUrl": "./src/",
+    "lib": [ "es2015", "dom" ],
+    "esModuleInterop": true,
+
+  "outDir": "lib",
+    "sourceMap": true,
+  "declaration": true,
     "paths": {
       "lib": [
         "./src/lib/*"

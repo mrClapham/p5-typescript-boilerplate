@@ -19,12 +19,16 @@
     "parcel": "^1.10.3",
     "semantic-release": "^17.4.4",
     "ts-jest": "^26.4.3",
+    "ts-loader": "^9.2.4",
     "ts-node": "^9.0.0",
     "typedoc": "^0.21.4",
-    "typescript": "^4.1.3"
+    "typescript": "^4.3.5",
+    "webpack-cli": "^4.7.2",
+    "webpack-dev-server": "^3.11.2"
   },
   "alias": {
-    "lib": "./src/lib"
+    "lib": "./src/lib",
+    "sketch": "./src/sketch"
   },
   "jest": {
     "moduleNameMapper": {
@@ -35,7 +39,7 @@
     "dev": "./node_modules/.bin/parcel src/index.html",
     "prod": "./node_modules/.bin/parcel build src/index.html",
     "umd": "./node_modules/.bin/parcel build --out-dir lib src/index.ts --global p5-ts-boilerplate",
-    "build": "npm run umd",
+    "build": "./node_modules/.bin/webpack",
     "test": "node_modules/.bin/jest",
     "test:watch": "node_modules/.bin/jest --watchAll",
     "commit": "cz",

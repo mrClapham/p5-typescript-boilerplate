@@ -1,4 +1,4 @@
-# A bare-bones starter kit for TypeScript projects
+# A Typescript boilerplate for creating p5 sketches
 
 ## Testing:
 

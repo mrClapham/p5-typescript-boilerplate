@@ -6,7 +6,7 @@ cache:
 notifications:
   email: false
 node_js:
-  - '12'
+  - '16'
 before_install:
   - npm i -g npm@^7.18.1 && npm install -g node-gyp
 

@@ -16,7 +16,7 @@
     "cz-conventional-changelog": "3.3.0",
     "eslint": "^7.16.0",
     "jest": "^26.6.3",
-    "parcel": "^2.0.0-beta.3.1",
+    "parcel": "^1.10.3",
     "semantic-release": "^17.4.4",
     "ts-jest": "^26.4.3",
     "ts-node": "^9.0.0",
@@ -34,7 +34,7 @@
   "scripts": {
     "dev": "./node_modules/.bin/parcel src/index.html",
     "prod": "./node_modules/.bin/parcel build src/index.html",
-    "umd": "./node_modules/.bin/parcel build src/index.ts --out-dir build --global genlibs",
+    "umd": "./node_modules/.bin/parcel build --out-dir dist src/index.ts --global p5-ts-boilerplate",
     "test": "node_modules/.bin/jest",
     "test:watch": "node_modules/.bin/jest --watchAll",
     "commit": "cz",

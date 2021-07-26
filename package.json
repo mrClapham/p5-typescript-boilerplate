@@ -17,7 +17,6 @@
     "eslint": "^7.16.0",
     "jest": "^26.6.3",
     "parcel": "^2.0.0-beta.3.1",
-    "parcel-bundler": "^1.12.4",
     "semantic-release": "^17.4.4",
     "ts-jest": "^26.4.3",
     "ts-node": "^9.0.0",

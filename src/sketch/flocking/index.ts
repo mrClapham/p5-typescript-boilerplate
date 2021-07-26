@@ -20,12 +20,17 @@ import * as dat from 'dat.gui';
 ///////////////////////////////////////
 const fps = 60;
 
+
+
 const defaultConfig = {
     width: 1000,
     height: 1000,
     depth: 10,
-    numBoids: 30,
-
+    numBoids: 100,
+    fullscreen: true,
+    fill: 'rgba(95,95,95,1)',
+    stroke: 'rgba(65,65,85,1)',
+    backgroundfill: 'rgba(0,0,0,.02)'
 };
 
 // export const createAttractorGrid = (width = 100, height = 100, xDivs = 10, yDivs = 10): { x: number, y: number }[][] => {
@@ -49,20 +54,26 @@ const defaultConfig = {
 export default (overrides = {}, boidConfig: IBoidConfig = defaultBoidConfig) => (s: p5): void => {
 
     const props = { ...defaultConfig, ...overrides, ...boidConfig };
-    const { width, height, depth, numBoids } = props;
-
+    const { width, height, depth, numBoids, fullscreen } = props;
     const flock = flockingAlgo(width, height, depth, numBoids, boidConfig);
     flock.addAttractor({ xPos: 300, yPos: 300, excusionZone: 40, attraction: -4 });
-
     const positiveMouseAttraction = 0.5;
     const negativeMouseAttraction = -15;
     const mouseTracker: IBoidAttractor = flock.addAttractor({ xPos: 300, yPos: 300, excusionZone: 50, attraction: positiveMouseAttraction });
 
+    const setSize = (s: p5): void => {
+        const canvWidth = fullscreen ? window.innerWidth : width;
+        const canvHeight = fullscreen ? window.innerHeight : height;
+        s.resizeCanvas(canvWidth, canvHeight);
+        flock.setWidth(canvWidth)
+        flock.setHeight(canvHeight)
+    }
+
     const onMouseMove = (e: MouseEvent): void => {
-        const { clientX, clientY, offsetX, offsetY } = e;
-        const elementX = clientX - offsetX;
-        const elementY = clientY - offsetY;
-        console.log(elementX)
+        const { clientX, clientY, target } = e;
+        const rect = target.getBoundingClientRect();
+        const elementX = clientX - rect.left; //x position within the element.
+        const elementY = clientY - rect.top;  //y position within the element.
         const vec = new Vector();
         vec.set(elementX, elementY, 0)
         mouseTracker.setPosition(vec);
@@ -77,7 +88,11 @@ export default (overrides = {}, boidConfig: IBoidConfig = defaultBoidConfig) => 
     }
 
     s.setup = (): void => {
-        const canv = s.createCanvas(width, height);
+        const canvWidth = fullscreen ? window.innerWidth : width;
+        const canvHeight = fullscreen ? window.innerHeight : height;
+        const canv = s.createCanvas(canvWidth, canvHeight);
+        window.addEventListener('resize', () => setSize(s));
+
         canv.mouseMoved(onMouseMove);
         canv.mousePressed(onMouseDown);
         canv.mouseReleased(onMouseUp);
@@ -87,9 +102,11 @@ export default (overrides = {}, boidConfig: IBoidConfig = defaultBoidConfig) => 
         gui.add(props, 'width', 100, 1000, 10)
             .name('canvas width')
             .onChange(() => {
-                console.log(canv.elt)
-                s.resizeCanvas(props.width, props.height);
-                flock.setWidth(props.width);
+                setSize(s)
+                // fullscreen
+                //     ? s.resizeCanvas(window.innerWidth, window.innerHeight)
+                //     : s.resizeCanvas(props.width, props.height);
+                // flock.setWidth(fullscreen ? window.innerWidth : props.width);
             });
         gui.add(props, 'height', 100, 1000, 10)
             .name('canvas height')
@@ -106,18 +123,27 @@ export default (overrides = {}, boidConfig: IBoidConfig = defaultBoidConfig) => 
         gui.add(props, 'maxforce', 0.01, 1, .01)
             .name('Max Force')
             .onChange(() => flock.setBoidMaxForce(props.maxforce));
+        gui.addColor(props, 'fill')
+            .name('Fill colour')
+        gui.addColor(props, 'stroke')
+            .name('stroke colour')
+        //.onChange(() => flock.setBoidMaxForce(props.maxforce));
+
+        ///
+        setSize(s)
+
     };
 
     s.draw = () => {
         flock.run();
-        // s.clear()
-        s.background('rgba(225,255,255, 0.05)');
+        //s.clear()
+        s.background(props.backgroundfill);
 
 
         flock.getPositions().forEach(p => {
-            s.stroke("#ff00ff");
+            s.stroke(props.stroke);
             s.strokeWeight(1);
-            s.fill("#ffff00");
+            s.fill(props.fill);
             s.ellipse(p.x, p.y, defaultConfig.depth / 2 - (p.z * -1), defaultConfig.depth / 2 - (p.z * -1));
         })
 

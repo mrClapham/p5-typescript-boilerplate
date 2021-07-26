@@ -8,7 +8,7 @@ notifications:
 node_js:
   - '12'
 before_install:
-  - npm i -g npm@^2.0.0 && npm install -g node-gyp
+  - npm i -g npm@^7.18.1 && npm install -g node-gyp
 
 before_script:
   - npm prune

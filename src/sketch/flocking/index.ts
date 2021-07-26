@@ -30,7 +30,8 @@ const defaultConfig = {
     fullscreen: true,
     fill: 'rgba(95,95,95,1)',
     stroke: 'rgba(65,65,85,1)',
-    backgroundfill: 'rgba(0,0,0,.02)'
+    backgroundfill: 'rgba(0,0,0,.02)',
+    strokeWeight: 1
 };
 
 // export const createAttractorGrid = (width = 100, height = 100, xDivs = 10, yDivs = 10): { x: number, y: number }[][] => {
@@ -127,6 +128,9 @@ export default (overrides = {}, boidConfig: IBoidConfig = defaultBoidConfig) => 
             .name('Fill colour')
         gui.addColor(props, 'stroke')
             .name('stroke colour')
+        gui.add(props, 'strokeWeight', 1, 10, 1)
+            .name('stroke weight')
+
         //.onChange(() => flock.setBoidMaxForce(props.maxforce));
 
         ///
@@ -142,7 +146,7 @@ export default (overrides = {}, boidConfig: IBoidConfig = defaultBoidConfig) => 
 
         flock.getPositions().forEach(p => {
             s.stroke(props.stroke);
-            s.strokeWeight(1);
+            s.strokeWeight(props.strokeWeight);
             s.fill(props.fill);
             s.ellipse(p.x, p.y, defaultConfig.depth / 2 - (p.z * -1), defaultConfig.depth / 2 - (p.z * -1));
         })

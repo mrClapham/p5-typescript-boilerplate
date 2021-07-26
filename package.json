@@ -2,7 +2,7 @@
   "name": "p5-typescript-boilerplate",
   "description": "A typescript library for creating stand-alone p5.js sketches",
   "version": "0.0.0-development",
-  "main": "build/index.js",
+  "main": "lib/index.js",
   "author": "Graham Clapham",
   "license": "MIT",
   "devDependencies": {
@@ -34,7 +34,8 @@
   "scripts": {
     "dev": "./node_modules/.bin/parcel src/index.html",
     "prod": "./node_modules/.bin/parcel build src/index.html",
-    "umd": "./node_modules/.bin/parcel build --out-dir dist src/index.ts --global p5-ts-boilerplate",
+    "umd": "./node_modules/.bin/parcel build --out-dir lib src/index.ts --global p5-ts-boilerplate",
+    "build": "npm run umd",
     "test": "node_modules/.bin/jest",
     "test:watch": "node_modules/.bin/jest --watchAll",
     "commit": "cz",

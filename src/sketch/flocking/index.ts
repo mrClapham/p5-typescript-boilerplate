@@ -55,7 +55,7 @@ const defaultConfig = {
 export default (overrides = {}, boidConfig: IBoidConfig = defaultBoidConfig) => (s: p5): void => {
 
     const props = { ...defaultConfig, ...overrides, ...boidConfig };
-    const { width, height, depth, numBoids, fullscreen } = props;
+    const { width, height, depth, numBoids } = props;
     const flock = flockingAlgo(width, height, depth, numBoids, boidConfig);
     flock.addAttractor({ xPos: 300, yPos: 300, excusionZone: 40, attraction: -4 });
     const positiveMouseAttraction = 0.5;

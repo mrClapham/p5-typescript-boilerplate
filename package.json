@@ -40,7 +40,7 @@
     "test:watch": "node_modules/.bin/jest --watchAll",
     "commit": "cz",
     "docs": "node_modules/.bin/typedoc --out docs src/lib/**/* --exclude '**/*+(.spec|.e2e).ts'",
-    "postinstall": "npm run build",
+    "postinstall": "./node_modules/.bin/webpack",
     "lint": "node_modules/.bin/eslint . --ext .ts",
     "semantic-release": "semantic-release"
   },

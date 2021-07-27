@@ -62,12 +62,13 @@ export default (overrides = {}, boidConfig: IBoidConfig = defaultBoidConfig) => 
     const negativeMouseAttraction = -15;
     const mouseTracker: IBoidAttractor = flock.addAttractor({ xPos: 300, yPos: 300, excusionZone: 50, attraction: positiveMouseAttraction });
 
-    const setSize = (s: p5): void => {
-        const canvWidth = fullscreen ? window.innerWidth : width;
-        const canvHeight = fullscreen ? window.innerHeight : height;
+    const setSize = (width, height, s: p5): void => {
+        const canvWidth = props.fullscreen ? window.innerWidth : width;
+        const canvHeight = props.fullscreen ? window.innerHeight : height;
+
         s.resizeCanvas(canvWidth, canvHeight);
-        flock.setWidth(canvWidth)
-        flock.setHeight(canvHeight)
+        flock.setWidth(canvWidth);
+        flock.setHeight(canvHeight);
     }
 
     const onMouseMove = (e: MouseEvent): void => {
@@ -90,10 +91,14 @@ export default (overrides = {}, boidConfig: IBoidConfig = defaultBoidConfig) => 
     }
 
     s.setup = (): void => {
-        const canvWidth = fullscreen ? window.innerWidth : width;
-        const canvHeight = fullscreen ? window.innerHeight : height;
+        const canvWidth = props.fullscreen ? window.innerWidth : width;
+        const canvHeight = props.fullscreen ? window.innerHeight : height;
         const canv = s.createCanvas(canvWidth, canvHeight);
-        window.addEventListener('resize', () => setSize(s));
+        window.addEventListener('resize', () => {
+            const canvWidth = props.fullscreen ? window.innerWidth : width;
+            const canvHeight = props.fullscreen ? window.innerHeight : height;
+            setSize(canvWidth, canvHeight, s)
+        });
 
         canv.mouseMoved(onMouseMove);
         canv.mousePressed(onMouseDown);
@@ -103,8 +108,8 @@ export default (overrides = {}, boidConfig: IBoidConfig = defaultBoidConfig) => 
         const gui = new dat.GUI({ name: 'Flocking GUI' });
         gui.add(props, 'width', 100, 1000, 10)
             .name('canvas width')
-            .onChange(() => {
-                setSize(s)
+            .onChange((value) => {
+                setSize(value, props.height, s)
                 // fullscreen
                 //     ? s.resizeCanvas(window.innerWidth, window.innerHeight)
                 //     : s.resizeCanvas(props.width, props.height);
@@ -112,7 +117,7 @@ export default (overrides = {}, boidConfig: IBoidConfig = defaultBoidConfig) => 
             });
         gui.add(props, 'height', 100, 1000, 10)
             .name('canvas height')
-            .onChange(() => flock.setHeight(props.height));
+            .onChange((value) => setSize(props.width, value, s));
         gui.add(props, 'depth', 0, 300, 10)
             .name('canvas depth')
             .onChange(() => flock.setDepth(props.depth));
@@ -131,11 +136,13 @@ export default (overrides = {}, boidConfig: IBoidConfig = defaultBoidConfig) => 
             .name('stroke colour')
         gui.add(props, 'strokeWeight', 1, 10, 1)
             .name('stroke weight')
+        gui.add(props, 'fullscreen', true)
+            .onChange(d => setSize(props.width, props.height, s))
 
         //.onChange(() => flock.setBoidMaxForce(props.maxforce));
 
         ///
-        setSize(s)
+        setSize(canvWidth, canvHeight, s);
 
     };
 

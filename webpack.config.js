@@ -27,11 +27,11 @@ module.exports = {
         libraryTarget: 'umd',
         filename: 'index.js',
         // auxiliaryComment: 'Test Comment',
-        path: path.resolve(__dirname, 'dist'),
+        path: path.resolve(__dirname, 'lib'),
 
     },
     devServer: {
-        contentBase: path.join(__dirname, 'dist'),
+        contentBase: path.join(__dirname, 'lib'),
         compress: true,
         port: 9000,
     }

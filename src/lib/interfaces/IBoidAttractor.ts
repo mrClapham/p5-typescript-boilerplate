@@ -1,6 +1,6 @@
 import { Vector } from 'p5';
 import { IBoid } from 'lib/interfaces';
-interface IBoidAttractor {
+export interface IBoidAttractor {
     run(boids: IBoid[]): void,
     setExclusionZone(value: number): void,
     getExclusionZone(): number,
@@ -10,4 +10,3 @@ interface IBoidAttractor {
     getPosition(): Vector
 }
 
-export { IBoidAttractor }

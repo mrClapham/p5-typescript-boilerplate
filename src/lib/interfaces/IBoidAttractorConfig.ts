@@ -1,9 +1,7 @@
-interface IBoidAttractorConfig {
+export interface IBoidAttractorConfig {
     xPos: number,
     yPos: number,
     zPos: number,
     excusionZone: number,
     attraction: number
 }
-
-export { IBoidAttractorConfig }

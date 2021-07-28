@@ -1,19 +1,19 @@
 import { Vector } from "p5";
 
-interface IBoidConfig {
+export interface IBoidConfig {
     r: number,
     maxspeed: number,  // Maximum speed
     maxforce: number,
     coheisionDistance: number,
 }
 
-interface IRunConfig {
+export interface IRunConfig {
     width: number,
     height: number,
     depth: number
 }
 
-interface IBoid extends IBoidConfig {
+export interface IBoid extends IBoidConfig {
     acceleration: Vector,
     run(boids: IBoid[], runConfig: IRunConfig): void,
     applyForce(force: Vector): void,
@@ -35,5 +35,3 @@ interface IBoid extends IBoidConfig {
     getMaxForce(): number,
 
 }
-
-export { IBoid, IBoidConfig, IRunConfig }

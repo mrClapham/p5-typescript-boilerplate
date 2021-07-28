@@ -1,12 +1,12 @@
 import { Vector } from "p5";
-import { IPoint3d } from 'lib/interfaces/IPoint3d';
+import { IPoints3d } from 'lib/interfaces/IPoints3d';
 import { IBoid } from 'lib/interfaces/IBoid';
 import { IBoidAttractor } from 'lib/interfaces/IBoidAttractor';
 import { IBoidAttractorConfig } from 'lib/interfaces/IBoidAttractorConfig';
 
 export interface IFlock {
     boids: IBoid[],
-    getPositions(): IPoint3d[],
+    getPositions(): IPoints3d[],
     setTarget(value: Vector): void,
     getTarget(): Vector,
     setHeight(value: number): void,

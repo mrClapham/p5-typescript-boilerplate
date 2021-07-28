@@ -62,7 +62,7 @@ export default (overrides = {}, boidConfig: IBoidConfig = defaultBoidConfig) => 
     const negativeMouseAttraction = -15;
     const mouseTracker: IBoidAttractor = flock.addAttractor({ xPos: 300, yPos: 300, excusionZone: 50, attraction: positiveMouseAttraction });
 
-    const setSize = (width, height, s: p5): void => {
+    const setSize = (width: number, height: number, s: p5): void => {
         const canvWidth = props.fullscreen ? window.innerWidth : width;
         const canvHeight = props.fullscreen ? window.innerHeight : height;
 

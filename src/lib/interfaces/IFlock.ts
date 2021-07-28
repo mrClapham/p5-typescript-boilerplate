@@ -1,8 +1,8 @@
 import { Vector } from "p5";
-import { IPoint3d } from 'lib/interfaces/iPoint3d';
+import { IPoint3d } from 'lib/interfaces/IPoint3d';
 import { IBoid } from 'lib/interfaces/IBoid';
-import { IBoidAttractor } from 'lib/interfaces/IBoidAttractor'
-import { IBoidAttractorConfig } from 'lib/interfaces/IBoidAttractorConfig'
+import { IBoidAttractor } from 'lib/interfaces/IBoidAttractor';
+import { IBoidAttractorConfig } from 'lib/interfaces/IBoidAttractorConfig';
 
 export interface IFlock {
     boids: IBoid[],
@@ -22,7 +22,7 @@ export interface IFlock {
     getBoidCohesionDistance(): number,
     setBoidMaxSpeed(value: number): void,
     getBoidMaxSpeed(): number,
-    setBoidMaxForce(value: number),
+    setBoidMaxForce(value: number): void,
     getBoidMaxForce(): number,
     run(): void
 }

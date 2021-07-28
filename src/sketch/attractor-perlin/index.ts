@@ -1,15 +1,17 @@
 import * as p5 from 'p5'
-import { create } from './particle';
+import { create, IParticle } from './particle';
+
+interface IPerlinGridItem { angle: number, noiseValue: number, vec: p5.Vector, x: number, y: number }
 
 const defaultConfig = { width: 800, height: 800, gridX: 6, gridY: 4 }
-export default (overrides = {}) => (s: p5) => {
+export default (overrides = {}) => (s: p5): void => {
   const config = { ...defaultConfig, ...overrides }
   const { width, height, gridX, gridY } = config
   const gridXsize = width / gridX
   const gridYsize = height / gridY
-  const gridPositions = []
+  const gridPositions: IPerlinGridItem[][] = []
   const incrementOffset = 0.01
-  const particles = [];
+  const particles: IParticle[] = [];
   let xOff = 0;
   let yOff = 0;
 
@@ -21,7 +23,7 @@ export default (overrides = {}) => (s: p5) => {
     const { noise, TWO_PI } = s
     const { Vector } = p5;
     for (let i = 0; i < gridY; i++) {
-      const _grid = []
+      const _grid: IPerlinGridItem[] = []
 
       for (let ii = 0; ii < gridX; ii++) {
         xOff += incrementOffset;
@@ -49,8 +51,8 @@ export default (overrides = {}) => (s: p5) => {
     particles.forEach(element => {
       element.display();
     });
-    gridPositions.forEach((e, i) => {
-      e.forEach((ee, ii) => {
+    gridPositions.forEach((e) => {
+      e.forEach((ee) => {
         s.push()
         s.fill(255, 0, 255, 100 / ee.noiseValue)
         //s.rotate(ee.vec.heading())
@@ -65,7 +67,7 @@ export default (overrides = {}) => (s: p5) => {
     //s.fill(255, 0, 255, 100)
     //s.rect(10,10,100,100)
 
-    const mouse = s.createVector(s.mouseX, s.mouseY)
+    // const mouse = s.createVector(s.mouseX, s.mouseY)
 
   }
 }

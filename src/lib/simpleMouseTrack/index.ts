@@ -10,7 +10,7 @@ import { mousePositionListener } from "lib/listeners";
 const render: Function = (canvas: HTMLCanvasElement) => {
   let mouseX = 0;
   let mouseY = 0;
-  const context: CanvasRenderingContext2D = canvas.getContext("2d"); //as CanvasRenderingContext2D;
+  const context: CanvasRenderingContext2D = canvas.getContext("2d") as CanvasRenderingContext2D; //as CanvasRenderingContext2D;
   const onMousePositionChanged = (e: MouseEvent) => {
     const { offsetX, offsetY } = e;
     mouseY = offsetY;

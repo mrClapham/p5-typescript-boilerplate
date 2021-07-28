@@ -12,9 +12,9 @@ export default (
   height = 300,
   sizeToParent = true,
   optClassName: string | null = null
-): HTMLCanvasElement | null => {
+): HTMLCanvasElement => {
   let canvas: HTMLCanvasElement;
-  const d: HTMLDivElement = document.querySelector(`#${target}`);
+  const d: HTMLDivElement = document.querySelector(`#${target}`) as HTMLDivElement;
   const parentWidth = d.getBoundingClientRect().width;
   const parentHeight = d.getBoundingClientRect().height;
   if (d) {
@@ -36,11 +36,13 @@ export default (
       canvas.width = parentWidth;
       canvas.height = parentHeight;
     };
-    console.log(sizeToParent);
     if (sizeToParent) {
       window.addEventListener("resize", onResize, true);
     }
+    return canvas;
+  } else {
+    return document.createElement("canvas")
   }
-  return canvas ? canvas : null;
+
 };
 

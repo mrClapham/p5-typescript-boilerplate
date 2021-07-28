@@ -8,7 +8,7 @@ let yStep = 1;
 let rotate = 1;
 
 const simpleCircleRenderer = (canvas: HTMLCanvasElement): Function => {
-  const context: CanvasRenderingContext2D = canvas.getContext("2d");
+  const context: CanvasRenderingContext2D = canvas.getContext("2d") as CanvasRenderingContext2D;
   const initialConfig = {
     x: 100,
     y: 100,

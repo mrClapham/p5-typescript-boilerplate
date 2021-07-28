@@ -3,6 +3,7 @@
   "description": "A typescript library for creating stand-alone p5.js sketches",
   "version": "0.0.0-development",
   "main": "lib/index.js",
+  "types": "lib/index.d.ts",
   "author": "Graham Clapham",
   "license": "MIT",
   "devDependencies": {
@@ -44,7 +45,7 @@
     "test:watch": "node_modules/.bin/jest --watchAll",
     "commit": "cz",
     "docs": "node_modules/.bin/typedoc --out docs src/lib/**/* --exclude '**/*+(.spec|.e2e).ts'",
-    "postinstall": "./node_modules/.bin/webpack",
+    "postinstall": "./node_modules/.bin/tsc",
     "lint": "node_modules/.bin/eslint . --ext .ts",
     "semantic-release": "semantic-release"
   },

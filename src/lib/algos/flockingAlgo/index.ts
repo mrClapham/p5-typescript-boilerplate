@@ -1,11 +1,11 @@
 import { create as createBoid, defaultConfig as boidDefaultConfig } from 'lib/algos/flockingAlgo/boidFactory';
 import { create as createBoidAttractor } from 'lib/algos/flockingAlgo/boidAttractorFactory';
 
-import { IPoint3d } from 'lib/interfaces/iPoint3d';
 import { IBoid, IBoidConfig } from 'lib/interfaces/IBoid';
 import { IBoidAttractor } from 'lib/interfaces/IBoidAttractor';
 import { IFlock } from 'lib/interfaces/IFlock';
 import { IBoidAttractorConfig } from 'lib/interfaces/IBoidAttractorConfig';
+import { IPoint3d } from 'lib/interfaces/iPoint3d';
 
 
 import { Vector } from 'p5';

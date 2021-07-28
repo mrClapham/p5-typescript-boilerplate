@@ -2,7 +2,7 @@ export * from "./IColor";
 export * from "./IShape";
 export * from "./IDraw";
 export * from "./IBoid";
-export * from "./IPoint3d";
+export * from "./IPoints3d";
 export * from "./IPoint";
 export * from "./IFlock";
 export * from "./IBoidAttractor";

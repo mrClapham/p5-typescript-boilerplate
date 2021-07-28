@@ -1,8 +1,8 @@
 import { Vector } from "p5";
-import { IPoints3d } from 'lib/interfaces/IPoints3d';
-import { IBoid } from 'lib/interfaces/IBoid';
-import { IBoidAttractor } from 'lib/interfaces/IBoidAttractor';
-import { IBoidAttractorConfig } from 'lib/interfaces/IBoidAttractorConfig';
+import { IPoints3d } from './IPoints3d';
+import { IBoid } from './IBoid';
+import { IBoidAttractor } from './IBoidAttractor';
+import { IBoidAttractorConfig } from './IBoidAttractorConfig';
 
 export interface IFlock {
     boids: IBoid[],

@@ -5,7 +5,7 @@ import { IBoid, IBoidConfig } from 'lib/interfaces/IBoid';
 import { IBoidAttractor } from 'lib/interfaces/IBoidAttractor';
 import { IFlock } from 'lib/interfaces/IFlock';
 import { IBoidAttractorConfig } from 'lib/interfaces/IBoidAttractorConfig';
-import { IPoint3d } from 'lib/interfaces/IPoint3d';
+import { IPoints3d } from 'lib/interfaces/IPoints3d';
 
 
 import { Vector } from 'p5';
@@ -37,7 +37,7 @@ export default (width = 100,
 
     return {
         boids,
-        getPositions(): IPoint3d[] {
+        getPositions(): IPoints3d[] {
             return boids.map(({ getPosition }) => {
                 const { x, y, z } = getPosition();
                 const rotation = getPosition().heading();

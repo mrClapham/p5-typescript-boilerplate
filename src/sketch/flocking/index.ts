@@ -28,7 +28,7 @@ const defaultConfig = {
     depth: 10,
     numBoids: 100,
     fullscreen: true,
-    fill: 'rgba(95,95,95,1)',
+    fill: 'rgba(95,95,0,1)',
     stroke: 'rgba(65,65,85,1)',
     backgroundfill: 'rgba(0,0,0,.02)',
     strokeWeight: 1

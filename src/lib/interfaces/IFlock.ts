@@ -2,7 +2,7 @@ import { Vector } from "p5";
 import { IBoid, IPoint3d } from 'lib/interfaces';
 import { IBoidAttractorConfig, IBoidAttractor } from 'lib/interfaces'
 
-interface IFlock {
+export interface IFlock {
     boids: IBoid[],
     getPositions(): IPoint3d[],
     setTarget(value: Vector): void,
@@ -24,5 +24,3 @@ interface IFlock {
     getBoidMaxForce(): number,
     run(): void
 }
-
-export { IFlock }

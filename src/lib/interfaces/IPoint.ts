@@ -1,2 +1,1 @@
-interface IPoint { x: number, y: number }
-export { IPoint };
+export interface IPoint { x: number, y: number }

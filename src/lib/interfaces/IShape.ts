@@ -1,6 +1,6 @@
 import { IColor } from ".";
 
-interface IShape {
+export interface IShape {
   width: number;
   height: number;
   x: number;
@@ -10,4 +10,3 @@ interface IShape {
   render: Function;
 }
 
-export { IShape };

@@ -2,8 +2,8 @@
   "name": "p5-typescript-boilerplate",
   "description": "A typescript library for creating stand-alone p5.js sketches",
   "version": "0.0.0-development",
-  "main": "lib/index.js",
-  "types": "lib/index.d.ts",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "author": "Graham Clapham",
   "license": "MIT",
   "devDependencies": {

@@ -4,5 +4,5 @@ node_modules
 .parcel-cache
 build
 dist
-lib
+output
 yarn-error.logs

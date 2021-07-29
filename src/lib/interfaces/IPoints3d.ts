@@ -1,0 +1,1 @@
+export interface IPoints3d { x: number, y: number, z: number, rotation: number }

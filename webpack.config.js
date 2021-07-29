@@ -30,7 +30,7 @@ module.exports = {
         libraryTarget: 'umd',
         filename: 'index.js',
         // auxiliaryComment: 'Test Comment',
-        path: path.resolve(__dirname, 'lib'),
+        path: path.resolve(__dirname, 'dist'),
 
     }
 };

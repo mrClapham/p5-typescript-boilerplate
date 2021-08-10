@@ -3,6 +3,7 @@ node_modules
 .vscode
 .parcel-cache
 build
-dist
+/dist
+/library
 output
 yarn-error.logs

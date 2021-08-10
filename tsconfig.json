@@ -4,18 +4,19 @@
     "module": "commonjs",
     "lib": ["es2017", "es7", "es6", "dom"],
     "declaration": true,
-    "outDir": "dist",
+    "outDir": "library",
     "strict": true,
     "esModuleInterop": true,
     "baseUrl": "src",
     "paths": {
-      "interfaces": ["interfaces/*"],
       "lib": ["lib/*"],
+      "p5": ["node_modules/p5/lib/p5.js"]
     }
   },
-  
+  "include": ["src"],
   "exclude": [
     "node_modules",
-    "dist"
+    "dist",
+    "library"
   ]
 }

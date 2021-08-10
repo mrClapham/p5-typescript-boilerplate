@@ -1,11 +1,7 @@
-import { create as createBoid, defaultConfig as boidDefaultConfig } from 'lib/algos/flockingAlgo/boidFactory';
-import { create as createBoidAttractor } from 'lib/algos/flockingAlgo/boidAttractorFactory';
+import { create as createBoid, defaultConfig as boidDefaultConfig } from './boidFactory';
+import { create as createBoidAttractor } from './boidAttractorFactory';
 
-import { IBoid, IBoidConfig } from 'lib/interfaces/IBoid';
-import { IBoidAttractor } from 'lib/interfaces/IBoidAttractor';
-import { IFlock } from 'lib/interfaces/IFlock';
-import { IBoidAttractorConfig } from 'lib/interfaces/IBoidAttractorConfig';
-import { IPointThreeD } from 'lib/interfaces/IPointThreeD';
+import { IBoid, IBoidConfig, IBoidAttractor, IFlock, IBoidAttractorConfig, IPoints3d } from '../../interfaces';
 
 
 import { Vector } from 'p5';
@@ -37,7 +33,7 @@ export default (width = 100,
 
     return {
         boids,
-        getPositions(): IPointThreeD[] {
+        getPositions(): IPoints3d[] {
             return boids.map(({ getPosition }) => {
                 const { x, y, z } = getPosition();
                 const rotation = getPosition().heading();

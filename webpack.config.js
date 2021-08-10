@@ -25,6 +25,15 @@ module.exports = {
         plugins: [new TsconfigPathsPlugin()]
     },
 
+    externals: {
+        p5: {
+            commonjs: 'p5',
+            commonjs2: 'p5',
+            amd: 'p5',
+            root: 'p5',
+        },
+    },
+
     output: {
         library: 'p5-ts',
         libraryTarget: 'umd',

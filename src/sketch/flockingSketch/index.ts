@@ -1,10 +1,10 @@
 import * as p5 from 'p5';
-import flockingAlgo from 'lib/algos/flockingAlgo';
-import { defaultConfig as defaultBoidConfig } from 'lib/algos/flockingAlgo/boidFactory';
 import { Vector } from 'p5';
-import { IBoidAttractor, IBoidConfig } from 'lib/interfaces';
-
 import * as dat from 'dat.gui';
+
+import flockingAlgo from '../../lib/algos/flockingAlgo';
+import { defaultConfig as defaultBoidConfig } from '../../lib/algos/flockingAlgo/boidFactory';
+import { IBoidAttractor, IBoidConfig } from '../../lib/interfaces';
 
 
 ///////////////////////////////////////
@@ -19,8 +19,6 @@ import * as dat from 'dat.gui';
 ///////////////////////////////////////
 ///////////////////////////////////////
 const fps = 60;
-
-
 
 const defaultConfig = {
     width: 1000,
@@ -52,7 +50,7 @@ const defaultConfig = {
 //     return _grid
 // }
 
-export default (overrides = {}, boidConfig: IBoidConfig = defaultBoidConfig) => (s: p5): void => {
+export const flockingSketch = (overrides = {}, boidConfig: IBoidConfig = defaultBoidConfig) => (s: p5): void => {
 
     const props = { ...defaultConfig, ...overrides, ...boidConfig };
     const { width, height, depth, numBoids } = props;
@@ -177,4 +175,3 @@ export default (overrides = {}, boidConfig: IBoidConfig = defaultBoidConfig) => 
 
     };
 };
-

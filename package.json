@@ -42,7 +42,7 @@
     "build:tsc": "./node_modules/.bin/tsc",
     "dev": "./node_modules/.bin/parcel src/index.html",
     "prod": "./node_modules/.bin/parcel build src/index.html",
-    "build": "webpack",
+    "build": "webpack && npm rum build:tsc",
     "test": "node_modules/.bin/jest",
     "test:watch": "node_modules/.bin/jest --watchAll",
     "commit": "cz",

@@ -39,7 +39,7 @@ module.exports = {
         libraryTarget: 'umd',
         filename: 'index.js',
         // auxiliaryComment: 'Test Comment',
-        path: path.resolve(__dirname, 'dist'),
+        path: path.resolve(__dirname, 'library'),
 
     }
 };

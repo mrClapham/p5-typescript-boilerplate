@@ -1,6 +1,6 @@
 import * as p5 from 'p5';
 import { Vector } from 'p5';
-import * as dat from 'dat.gui';
+// import * as dat from 'dat.gui';
 
 import flockingAlgo from '../../lib/algos/flockingAlgo';
 import { defaultConfig as defaultBoidConfig } from '../../lib/algos/flockingAlgo/boidFactory';
@@ -103,42 +103,48 @@ export const flockingSketch = (overrides = {}, boidConfig: IBoidConfig = default
         canv.mouseReleased(onMouseUp);
         s.frameRate(fps);
         //--DAT gui
-        const gui = new dat.GUI({ name: 'Flocking GUI' });
-        gui.add(props, 'width', 100, 1000, 10)
-            .name('canvas width')
-            .onChange((value) => {
-                setSize(value, props.height, s)
-                // fullscreen
-                //     ? s.resizeCanvas(window.innerWidth, window.innerHeight)
-                //     : s.resizeCanvas(props.width, props.height);
-                // flock.setWidth(fullscreen ? window.innerWidth : props.width);
-            });
-        gui.add(props, 'height', 100, 1000, 10)
-            .name('canvas height')
-            .onChange((value) => setSize(props.width, value, s));
-        gui.add(props, 'depth', 0, 300, 10)
-            .name('canvas depth')
-            .onChange(() => flock.setDepth(props.depth));
-        gui.add(props, 'coheisionDistance', 1, 1500, 1)
-            .name('coheision distance')
-            .onChange(() => flock.setBoidCohesionDistance(props.coheisionDistance));
-        gui.add(props, 'maxspeed', 0.1, 10, .1)
-            .name('Max Speed')
-            .onChange(() => flock.setBoidMaxSpeed(props.maxspeed));
-        gui.add(props, 'maxforce', 0.01, 1, .01)
-            .name('Max Force')
-            .onChange(() => flock.setBoidMaxForce(props.maxforce));
-        gui.addColor(props, 'fill')
-            .name('Fill colour')
-        gui.addColor(props, 'stroke')
-            .name('stroke colour')
-        gui.add(props, 'strokeWeight', 1, 10, 1)
-            .name('stroke weight')
-        gui.add(props, 'fullscreen', true)
-            .onChange(d => setSize(props.width, props.height, s))
-
-        //.onChange(() => flock.setBoidMaxForce(props.maxforce));
-
+        //const gui = new dat.GUI({ name: 'Flocking GUI', autoPlace: false });
+        //const domForGui = document.querySelector('#gui');
+        // console.log('domForGui :: ', domForGui);
+        // if (domForGui && domForGui?.childNodes.length === 0) {
+        //     domForGui.appendChild(gui.domElement);
+        // }
+        /*
+                gui.add(props, 'width', 100, 1000, 10)
+                    .name('canvas width')
+                    .onChange((value) => {
+                        setSize(value, props.height, s)
+                        // fullscreen
+                        //     ? s.resizeCanvas(window.innerWidth, window.innerHeight)
+                        //     : s.resizeCanvas(props.width, props.height);
+                        // flock.setWidth(fullscreen ? window.innerWidth : props.width);
+                    });
+                gui.add(props, 'height', 100, 1000, 10)
+                    .name('canvas height')
+                    .onChange((value) => setSize(props.width, value, s));
+                gui.add(props, 'depth', 0, 300, 10)
+                    .name('canvas depth')
+                    .onChange(() => flock.setDepth(props.depth));
+                gui.add(props, 'coheisionDistance', 1, 1500, 1)
+                    .name('coheision distance')
+                    .onChange(() => flock.setBoidCohesionDistance(props.coheisionDistance));
+                gui.add(props, 'maxspeed', 0.1, 10, .1)
+                    .name('Max Speed')
+                    .onChange(() => flock.setBoidMaxSpeed(props.maxspeed));
+                gui.add(props, 'maxforce', 0.01, 1, .01)
+                    .name('Max Force')
+                    .onChange(() => flock.setBoidMaxForce(props.maxforce));
+                gui.addColor(props, 'fill')
+                    .name('Fill colour')
+                gui.addColor(props, 'stroke')
+                    .name('stroke colour')
+                gui.add(props, 'strokeWeight', 1, 10, 1)
+                    .name('stroke weight')
+                gui.add(props, 'fullscreen', true)
+                    .onChange(d => setSize(props.width, props.height, s))
+        
+                //.onChange(() => flock.setBoidMaxForce(props.maxforce));
+        */
         ///
         setSize(canvWidth, canvHeight, s);
 

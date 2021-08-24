@@ -57,9 +57,7 @@
     }
   },
   "dependencies": {
-    "@types/dat.gui": "^0.7.7",
     "@types/p5": "^0.9.1",
-    "dat.gui": "^0.7.7",
     "p5": "^1.2.0",
     "sketch": "^0.2.0"
   },

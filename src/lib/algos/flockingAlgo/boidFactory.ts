@@ -4,7 +4,7 @@ import { Vector } from "p5";
 
 export const defaultConfig: IBoidConfig = {
     r: 1.0,
-    maxspeed: .75,
+    maxspeed: 1.2,
     maxforce: 0.25,
     coheisionDistance: 50,
 }

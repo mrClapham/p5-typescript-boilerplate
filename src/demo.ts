@@ -2,7 +2,8 @@ import p5 from "p5";
 // import circlesDemo from "./sketch/circle-demo";
 // import attractorsBasic from './sketch/attractors-basic'
 // import attractorPerlin from './sketch/attractor-perlin'
-import { flockingSketch } from 'sketch/flockingSketch/index'
+// import { flockingSketch } from 'sketch/flockingSketch/index'
+import { noiseOrbitSketch } from './sketch/noiseOrbitSketch/index';
 
 document.addEventListener("DOMContentLoaded", () => {
   //const sketchInstance = new p5(circlesDemo, "root");
@@ -11,7 +12,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const attractors: HTMLElement = document.querySelector('#attractors') as HTMLElement;
 
   if (attractors) {
-    const flockingInstance = new p5(flockingSketch({ width: 900, height: 600 }), attractors);
+    const noiseOrbitSketchInstance = new p5(noiseOrbitSketch({ width: 600, height: 600 }));
 
   }
 });

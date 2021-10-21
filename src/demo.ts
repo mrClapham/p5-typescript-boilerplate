@@ -12,7 +12,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const attractors: HTMLElement = document.querySelector('#attractors') as HTMLElement;
 
   if (attractors) {
-    const noiseOrbitSketchInstance = new p5(noiseOrbitSketch({ width: 600, height: 600 }));
+    const noiseOrbitSketchInstance = new p5(noiseOrbitSketch({ width: 1000, height: 1000 }));
 
   }
 });

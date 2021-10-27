@@ -1,4 +1,8 @@
-import { rgbaColor } from "./index";
+/**
+ * @jest-environment jsdom
+ */
+
+import { rgbaColor, createColoursArray, calculateSteps } from ".";
 
 describe("rgbaColor", () => {
   it("Should generate a string from rgba values", () => {
@@ -41,3 +45,36 @@ describe("rgbaColor", () => {
     );
   });
 });
+
+describe('calculateSteps', () => {
+  it('Should return the correct steps', () => {
+    const start1 = 10
+    const end1 = 100
+    const steps = 10
+
+    const start2 = 100
+    const end2 = 10
+    const steps2 = 10
+
+    const result = calculateSteps(start1, end1, steps);
+    expect(result).toEqual(9)
+    expect(result * steps).toEqual(end1 - start1)
+
+    const result2 = calculateSteps(start2, end2, steps2);
+    expect(result2).toEqual(-9)
+
+  })
+})
+
+describe('createColoursArray', () => {
+  it('Should return an array of RGB colours', () => {
+    const start = { r: 255, g: 0, b: 255, a: 0 }
+    const end = { r: 0, g: 255, b: 0, a: 1 }
+    const result = createColoursArray(start, end, 5);
+    expect(result.length).toEqual(5)
+    expect(result[4].rgba).toEqual("rgba(0,255,0,1.000)")
+    // expect(result[3].rgba).toEqual("rgba(0,255,0,1)")
+    // expect(result[4].rgba).toEqual("rgba(0,255,0,1)")
+  }
+  )
+})

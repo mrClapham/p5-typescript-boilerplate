@@ -51,4 +51,7 @@ const calculateSteps = (start: number, end: number, steps: number) => {
   return (end - start) / steps
 }
 
+
+
+
 export { rgbaColor, createColoursArray, calculateSteps };

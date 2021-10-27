@@ -77,4 +77,5 @@ describe('createColoursArray', () => {
     // expect(result[4].rgba).toEqual("rgba(0,255,0,1)")
   }
   )
+
 })

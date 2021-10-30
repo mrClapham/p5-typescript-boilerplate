@@ -1,4 +1,4 @@
 export interface IDraw {
-  play: Function;
-  pause: Function;
+  play: () => void;
+  pause: () => void;
 }

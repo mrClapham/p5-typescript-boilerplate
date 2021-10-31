@@ -1,6 +1,7 @@
 import createCanvas from "lib/createCanvas";
 import { draw } from "lib/draw";
-import { IDraw } from 'lib/interfaces';
+import { IGenericConfig } from "lib/interfaces/IGenericConfig";
+import { IDraw } from "lib/interfaces";
 
 const renderFactory = (
   renderer: (canvas: HTMLCanvasElement) => () => void,
@@ -8,9 +9,9 @@ const renderFactory = (
   width = 200,
   height = 200,
   sizeToParent = true,
-  optClassName: string | null = null
+  optClassName: string | null = null,
+  config: IGenericConfig
 ): IDraw => {
-  console.log('Render factory')
   const canvas: HTMLCanvasElement = createCanvas(
     target,
     width,
@@ -19,7 +20,7 @@ const renderFactory = (
     optClassName
   );
 
-  return draw(renderer(canvas));
+  return draw(renderer(canvas), config);
 };
 
 export { renderFactory };

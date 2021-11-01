@@ -1,4 +1,14 @@
-import { renderFactory } from "lib/factories/renderFactory";
+interface IImageDataMutable {
+  data: Uint8ClampedArray;
+  height: number;
+  width: number;
+}
+
+const grayScaleImageData = (d: ImageData): ImageData => {
+  const { data, width, height } = d;
+  const newData = new ImageData(data, width, height);
+  return newData;
+};
 
 const initialConfig = {
   x: 100,
@@ -20,29 +30,36 @@ const imageGlitchRenderer = (canvas: HTMLCanvasElement): (() => void) => {
 
   let currentImage = initialConfig.imageUrl;
   let img: CanvasImageSource | null = null;
-  let imgArray: ImageData | null = null;
+  let imgData: ImageData = {
+    data: new Uint8ClampedArray(),
+    width: 0,
+    height: 0
+  };
+
   let imHeight = 0;
   let imWidth = 0;
 
   const loadImage = (i: string) => {
+    console.log("LOAD ", i);
     img = new Image();
     img.setAttribute("crossOrigin", "");
     img.src = i + "?" + new Date().getTime();
 
     img.addEventListener("load", (e) => {
+      console.log("Image loaded ");
       imHeight = e.target.height;
       imWidth = e.target.width;
+      context.clearRect(0, 0, imWidth, imHeight);
+      context.drawImage(img, 0, 0, imWidth, imHeight);
     });
-    console.log(" imHeight ", imHeight);
     currentImage = i;
-    try {
-      img && context.drawImage(img, 0, 0, imWidth, imHeight);
-      imgArray = context.getImageData(0, 0, imWidth, imHeight);
-      console.log(imgArray);
-    } catch (e) {
-      //
-      console.log(e);
-    }
+    // try {
+    //   img && context.drawImage(img, 0, 0, imWidth, imHeight);
+    //   // imgData = context.getImageData(0, 0, imWidth, imHeight);
+    // } catch (e) {
+    //   //
+    //   console.log(e);
+    // }
   };
 
   loadImage(initialConfig.imageUrl);
@@ -50,8 +67,8 @@ const imageGlitchRenderer = (canvas: HTMLCanvasElement): (() => void) => {
   return (config = initialConfig): void => {
     const props = { ...initialConfig, ...config };
     const { col, imageUrl } = props;
-    const { clientWidth, clientHeight } = canvas;
-    context.clearRect(0, 0, clientWidth, clientHeight);
+    // const { clientWidth, clientHeight } = canvas;
+    //context.clearRect(0, 0, clientWidth, clientHeight);
     context.rect(100, 100, 1001, 100);
     context.fillStyle = col;
     context.fillRect(0, 0, 150, 75);
@@ -60,9 +77,23 @@ const imageGlitchRenderer = (canvas: HTMLCanvasElement): (() => void) => {
     if (imageUrl !== currentImage) {
       loadImage(imageUrl);
     } else {
-      img && context.drawImage(img, 0, 0, imWidth, imHeight);
+      // img && context.drawImage(img, 0, 0, imWidth, imHeight);
     }
+
+    // for (let i = 0; i < cloneData.length; i += 4) {
+    //   const total: number = data[i] + data[i + 1] + data[i + 2];
+    //   const averageData = total / 3;
+    //   cloneData[i] = averageData;
+    //   cloneData[i + 1] = averageData;
+    //   cloneData[i + 2] = averageData;
+    // }
+
+    // try {
+    //   context.putImageData(grayScaleImageData(imgData), 0, 0);
+    // } catch (e) {
+    //   //
+    //   console.log(e);
+    // }
   };
 };
-
 export { imageGlitchRenderer };

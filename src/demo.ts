@@ -20,10 +20,28 @@ document.addEventListener("DOMContentLoaded", () => {
       () =>
         ss.update({
           imageUrl:
-            "https://images.unsplash.com/photo-1604227878600-00157ecb7c74?ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8aGFsbG93ZWVuJTIwcHVtcGtpbnxlbnwwfHwwfHw%3D&ixlib=rb-1.2.1&w=1000&q=80"
+            //"https://nas-national-prod.s3.amazonaws.com/styles/article_hero_inline/s3/_2922260053_7abf7bb195_o.jpg?itok=PHVNg_0S"
+            "https://i.imgur.com/bJPvpYZ.jpeg"
         }),
-      4000
+      1000
     );
+
+    // setTimeout(
+    //   () =>
+    //     ss.update({
+    //       imageUrl:
+    //         "https://i.guim.co.uk/img/media/5cbefc6ca39ec6e2aed5123400507980425652bf/0_0_7117_4268/master/7117.jpg?width=1200&height=900&quality=85&auto=format&fit=crop&s=0cb827433607dd6ca9309a1eae086cf9"
+    //     }),
+    //   8000
+    // );
+    // setTimeout(
+    //   () =>
+    //     ss.update({
+    //       imageUrl:
+    //         "https://nas-national-prod.s3.amazonaws.com/styles/article_hero_inline/s3/_2922260053_7abf7bb195_o.jpg?itok=PHVNg_0S"
+    //     }),
+    //   12000
+    // );
 
     // const noiseOrbitSketchInstance = new p5(noiseOrbitSketch({ width: 1000, height: 1000 }), root);
   }

@@ -51,6 +51,7 @@ const imageGlitchRenderer = (canvas: HTMLCanvasElement): (() => void) => {
       imWidth = e.target.width;
       context.clearRect(0, 0, imWidth, imHeight);
       context.drawImage(img, 0, 0, imWidth, imHeight);
+      const imgData = context.getImageData(0, 0, imWidth, imHeight);
     });
     currentImage = i;
     // try {

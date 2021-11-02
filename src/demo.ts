@@ -16,15 +16,16 @@ document.addEventListener("DOMContentLoaded", () => {
   if (root) {
     const ss = imageGlitchSketch({ col: "#0033ff" });
     console.log(ss);
-    setTimeout(
-      () =>
-        ss.update({
-          imageUrl:
-            //"https://nas-national-prod.s3.amazonaws.com/styles/article_hero_inline/s3/_2922260053_7abf7bb195_o.jpg?itok=PHVNg_0S"
-            "https://i.imgur.com/bJPvpYZ.jpeg"
-        }),
-      1000
-    );
+    // setTimeout(
+    //   () =>
+    //     ss.update({
+    //       imageUrl:
+    //         //"https://nas-national-prod.s3.amazonaws.com/styles/article_hero_inline/s3/_2922260053_7abf7bb195_o.jpg?itok=PHVNg_0S"
+    //         // "https://i.imgur.com/bJPvpYZ.jpeg"
+    //         "https://i.imgur.com/jahcCUd_d.webp?maxwidth=520&shape=thumb&fidelity=high"
+    //     }),
+    //   1000
+    // );
 
     // setTimeout(
     //   () =>

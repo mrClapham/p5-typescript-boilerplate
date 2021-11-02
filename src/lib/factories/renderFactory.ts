@@ -12,6 +12,7 @@ const renderFactory = (
   optClassName: string | null = null,
   config: IGenericConfig
 ): IDraw => {
+  console.log('Render factory')
   const canvas: HTMLCanvasElement = createCanvas(
     target,
     width,

@@ -1,4 +1,7 @@
-import { draw } from 'lib/draw';
+import { alladin } from './alladin';
+import TwoByThree from './twoby4'
+
+
 interface IImageDataMutable {
   data: Uint8ClampedArray;
   height: number;
@@ -18,105 +21,48 @@ const defaultData = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGQAAABQCAIAA
 
 interface IDotArray { x: number, y: number, r: number, g: number, b: number, a: number, size: number, orig: number }
 
-const grayScaleImageData = (d: ImageData): ImageData => {
-  const { data, width, height } = d;
-  const newData = new ImageData(data, width, height);
-  const { data: newImData } = newData;
-  for (let i = 0; i < newImData.length; i += 4) {
-    const total: number = newImData[i] + newImData[i + 1] + newImData[i + 2];
-    const averageData = total / 3;
-    newImData[i] = averageData;
-    newImData[i + 1] = averageData;
-    newImData[i + 2] = averageData;
-  }
-  return newData;
-};
-
-const RGBShiftImageData = (d: ImageData, rShift = 3, gShift = 10, bShift = -5): { red: ImageData, green: ImageData, blue: ImageData } => {
-  const { data, width, height } = d;
-  const newData = new ImageData(data, width, height);
-  const red = new ImageData(new Uint8ClampedArray(data), width, height);
-  const green = new ImageData(new Uint8ClampedArray(data), width, height);
-  const blue = new ImageData(new Uint8ClampedArray(data), width, height);
-
-  const { data: newImData } = newData;
-  for (let i = 0; i < newImData.length; i += 4) {
-    const total: number = newImData[i] + newImData[i + 1] + newImData[i + 2];
-    const averageData = total / 3;
-    //newImData[i] = newImData[i];
-    //newImData[i + 1] = 0;
-    //newImData[i + 2] = 0;
-
-    //red.data[i] = newImData[i];
-    red.data[i + 1] = 0;
-    red.data[i + 2] = 0;
-
-    green.data[i] = 0;
-    green.data[i + 2] = 0;
-
-    blue.data[i] = 0;
-    blue.data[i + 1] = 0;
-
-  }
-  return { red, green, blue };
-};
 
 export const getRelativeSize = (pixelValue: number, size: number) => {
   const pc = pixelValue / 255;
   const retSize = size * pc
   return retSize
 }
-const makeDotArray = (imageData: ImageData, size = 20, channel = 0): IDotArray[] => {
+
+const makeDotArray = (imageData: ImageData, size = 10): IDotArray[][] => {
+  console.log(" imageData ::: ", imageData)
   const { data, width, height } = imageData;
-  console.log(imageData);
 
-  const arr: IDotArray[] = [];
-  const numCols = Math.round(width / size);
-  const numRows = Math.round(height / size);
-  const step = 4 * size;
+  const rowLength = width * 4
+  const numCols = Math.ceil(width / size);
+  const numRows = Math.ceil(height / size);
 
+  console.log('numCols :: ', numCols)
+  console.log('numRows :: ', numRows)
+  console.log('rowLength :: ', rowLength)
+  console.log('data length :: ', data.length)
 
-  console.log('width :: ', width);
-  console.log('height :: ', height);
-  console.log('numRows :: ', numRows);
-  console.log('numCols :: ', numCols);
-  console.log('data :: ', data);
-  console.log('step :: ', step);
-  console.log('data items : ', data.length / step)
+  const array3d: Uint8ClampedArray[] = [];
+  const gridArray: IDotArray[][] = []
 
-
-  const currentStep = 0;
-  const datArr = []
-  for (let j = 0; j < data.length; j += step) {
-    datArr.push(j)
+  for (let i = 0; i < rowLength; i++) {
+    array3d.push(data.slice(i * rowLength, i * rowLength + rowLength))
   }
 
-  console.log(' datArr ', datArr)
+  console.log(array3d)
 
-  const xPos = 0;
-  const yPos = 0;
-  let arrayCount = 0
-
-  for (let i = 0; i < numCols * size; i += size) {
-    for (let ii = 0; ii < numRows * size; ii += size) {
-      arr.push({ x: ii, y: i, r: data[arrayCount], g: data[arrayCount + 1], b: data[arrayCount + 2], a: data[arrayCount + 3], size, orig: arrayCount });
-      arrayCount += step
+  for (let i = 0; i < array3d.length; i += size) {
+    gridArray[i] = []
+    for (let ii = 0; ii < numCols; ii++) {
+      const colCount = ii * 4 * size
+      gridArray[i].push({ size, r: array3d[i][colCount], g: array3d[i][colCount + 1], b: array3d[i][colCount + 3], a: array3d[i][colCount + 4], x: ii * size, y: i, orig: colCount })
     }
-    arrayCount += (4 * width) * size;
   }
-  // let xPos = 0
-  // for (let ii = 0; ii < data.length; ii += 4 * 8) {
-  //   const pixelPos = ii;
-  //   // console.log(pixelPos);
-  //   arr.push({ x: 0, y: xPos, r: data[ii], g: data[ii + 1], b: data[ii + 2], a: data[ii + 3], size, orig: pixelPos });
-  //   xPos += size;
 
-  // }
+  console.log(gridArray)
 
-  console.log(arr)
-  return arr
+
+  return gridArray
 }
-
 
 const initialConfig = {
   x: 100,
@@ -127,8 +73,8 @@ const initialConfig = {
   rotation: 45,
   red: 0,
   col: "#ff00ff",
-  imageUrl:
-    "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB4AAAAeCAIAAAC0Ujn1AAABgWlDQ1BzUkdCIElFQzYxOTY2LTIuMQAAKJF1kd8rg1EYxz/biGya4sKFiyVcbZqRuFG2hFpaM2W42V77obZ5e98tLbfKraLEjV8X/AXcKtdKESm5U66JG9breTe1JTunc57P+Z7neXrOc8AayShZvcEL2VxeC0/6XfPRBVfTC3astMgciim6Oh4KBak7Pu+xmPbWY+aq7/fvsC8ndAUszcJjiqrlhaeEg2t51eQd4Q4lHVsWPhN2a1Kg8J2pxyv8anKqwt8ma5FwAKxtwq5UDcdrWElrWWF5OT3ZTEH5rcd8iSORm5sV2y2rC50wk/hxMc0EAYYZYFT2YTz46JcTdeK95fgZViVWkV2liMYKKdLkcYtakOwJsUnREzIzFM3+/+2rnhz0VbI7/ND4bBjvvdC0DaUtw/g6MozSMdie4DJXjV89hJEP0beqWs8BODfg/KqqxXfhYhM6H9WYFitLNlnWZBLeTqE1Cu030LJY6dnvPScPEFmXr7qGvX3oE3/n0g8wUGfNWvle9gAAAAlwSFlzAAALEwAACxMBAJqcGAAAAEVJREFUSIntlcEJACAMxHri/rs6wblBfCiIcvmG5lEolYsQ6yLdeHSHpJP+MS08qAXONSad9Dk6v79hgZXIvrmQpJO+lp7WzQksdOzqzgAAAABJRU5ErkJggg=="
+  imageUrl: alladin
+  //imageUrl: TwoByThree
 };
 
 const imageGlitchRenderer = (canvas: HTMLCanvasElement): (() => void) => {
@@ -144,7 +90,7 @@ const imageGlitchRenderer = (canvas: HTMLCanvasElement): (() => void) => {
   let imWidth = 0;
 
   let imgData: ImageData | null;
-  let dotArray: IDotArray[] = []
+  let dotArray: IDotArray[][] = []
 
   const loadImage = (i: string) => {
     console.log("LOAD ", i);
@@ -163,7 +109,7 @@ const imageGlitchRenderer = (canvas: HTMLCanvasElement): (() => void) => {
         imgData = context.getImageData(0, 0, imWidth, imHeight);
         context.clearRect(0, 0, imWidth, imHeight);
       }
-      imgData ? dotArray = makeDotArray(imgData, 10, 1) : dotArray = [];
+      imgData ? dotArray = makeDotArray(imgData, 3) : dotArray = [];
 
       //context.putImageData(green, 0, 40)
       //context.putImageData(blue, -9, 5)
@@ -172,7 +118,8 @@ const imageGlitchRenderer = (canvas: HTMLCanvasElement): (() => void) => {
     currentImage = i;
   };
 
-  loadImage(initialConfig.imageUrl);
+  //loadImage(initialConfig.imageUrl);
+  loadImage(defaultData);
 
   return (config = initialConfig): void => {
     const props = { ...initialConfig, ...config };
@@ -180,24 +127,39 @@ const imageGlitchRenderer = (canvas: HTMLCanvasElement): (() => void) => {
     if (imageUrl !== currentImage) {
       loadImage(imageUrl);
     } else {
-      // img && context.drawImage(img, 0, 0, imWidth, imHeight);
+      img && context.drawImage(img, 0, 0, imWidth, imHeight);
     }
 
     try {
-      //context.globalCompositeOperation = 'multiply';
-      context.clearRect(0, 0, imWidth, imHeight);
+      // context.globalCompositeOperation = 'overlay';
+      context.clearRect(0, 0, 10000, 10000);
       // const { red, green, blue } = RGBShiftImageData(imgData);
-
-      img && context.drawImage(img, 0, 0)
-
+      //img && context.drawImage(img, 0, 0)
+      //img && context.drawImage(img, 0, 0)
+      const offset = 600;
+      img && context.drawImage(img, 0, 0, imWidth, imHeight);
       if (imgData) {
-        dotArray.forEach((d: IDotArray) => {
-          const { x, y, r, g, b, a, size } = d;
-          const circle = new Path2D();  // <<< Declaration
-          circle.arc(x + size / 2, y + 200, size / 2, 0, 2 * Math.PI, false);
-          context.fillStyle = `rgba(${r},${g},${b},1)`;
-          context.fill(circle);
+        dotArray.forEach((d: IDotArray[]) => {
+          d.forEach((dd: IDotArray) => {
+            const { x, y, r, g, b, a, size } = dd;
+            const circle = new Path2D();
+            context.imageSmoothingEnabled = true;
+            // context.globalCompositeOperation = "lighter";
+            circle.arc(x + size / 2, y + offset, size / 2, 0, 2 * Math.PI, false);
+            context.fillStyle = `rgba(${r},${g},${b},1)`;
+            context.fill(circle);
+            // circle.arc(x + size / 2, y + offset, getRelativeSize(g, size) / 2, 0, 2 * Math.PI, false);
+            // context.fillStyle = `rgba(0, 255, 0, ${g / 255})` // `rgba(${r},${g},${b},1)`;
+            // context.fill(circle);
+            // circle.arc(x + size / 2, y + offset, getRelativeSize(b, size) / 2, 0, 2 * Math.PI, false);
+            // context.fillStyle = `rgba(0, 0, 255, ${b / 255})`// `rgba(${r},${g},${b},1)`;
+            // context.fill(circle);
+
+          })
+
         })
+
+        //
         // // console.log(green)
         // context.clearRect(0, 0, imWidth, imHeight);
         // //context.putImageData(red, Math.random() * 30, 10)

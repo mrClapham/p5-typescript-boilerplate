@@ -7,6 +7,6 @@ export interface IShape {
   y: number;
   color: IColor;
   rotation: number;
-  render: Function;
+  render: () => void;
 }
 

@@ -47,7 +47,7 @@ const createColoursArray = (start: IColor, end: IColor, steps: number): IColorRa
   return returnArray;
 }
 
-const calculateSteps = (start: number, end: number, steps: number) => {
+const calculateSteps = (start: number, end: number, steps: number): number => {
   return (end - start) / steps
 }
 

@@ -1,20 +1,26 @@
-import p5 from "p5";
+//import p5 from "p5";
 // import attractorsBasic from './sketch/attractors-basic'
 // import attractorPerlin from './sketch/attractor-perlin'
 // import { flockingSketch } from 'sketch/flockingSketch/index'
-import { noiseOrbitSketch } from "./sketch/noiseOrbitSketch/index";
+// import { noiseOrbitSketch } from "./sketch/noiseOrbitSketch/index";
 import imageGlitchSketch from "./sketch/imageGlitch";
 
 document.addEventListener("DOMContentLoaded", () => {
   //const sketchInstance = new p5(circlesDemo, "root");
   //const attractorsInstance = new p5(attractorsBasic, "root");
   // const perlinInstance = new p5(attractorPerlin({ width: 900, height: 600, gridX: 20, gridY: 20 }), "root");
-  const attractors: HTMLElement = document.querySelector(
-    "#attractors"
-  ) as HTMLElement;
+
+
+  // const attractors: HTMLElement = document.querySelector(
+  //   "#attractors"
+  // ) as HTMLElement;
+
+
+
   const root: HTMLElement = document.querySelector("#root") as HTMLElement;
   if (root) {
-    const ss = imageGlitchSketch({ col: "#0033ff" });
+    const config = { width: 1000, dotSize: 20, imageUrl: 'https://i2-prod.mirror.co.uk/incoming/article25556419.ece/ALTERNATES/s1200d/1_Portrait-of-British-Short-hair-blue-cat-with-yellow-eyes.jpg' }
+    const ss = imageGlitchSketch(config, 'root');
     console.log(ss);
     // setTimeout(
     //   () =>
@@ -35,14 +41,14 @@ document.addEventListener("DOMContentLoaded", () => {
     //     }),
     //   8000
     // );
-    // setTimeout(
-    //   () =>
-    //     ss.update({
-    //       imageUrl:
-    //         "https://nas-national-prod.s3.amazonaws.com/styles/article_hero_inline/s3/_2922260053_7abf7bb195_o.jpg?itok=PHVNg_0S"
-    //     }),
-    //   12000
-    // );
+    setTimeout(
+      () =>
+        ss.update({
+          imageUrl:
+            "https://nas-national-prod.s3.amazonaws.com/styles/article_hero_inline/s3/_2922260053_7abf7bb195_o.jpg?itok=PHVNg_0S"
+        }),
+      4000
+    );
 
     // const noiseOrbitSketchInstance = new p5(noiseOrbitSketch({ width: 1000, height: 1000 }), root);
   }

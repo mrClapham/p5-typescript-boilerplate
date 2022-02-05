@@ -33,8 +33,8 @@ export default (
       console.log(e);
       const parentWidth = d.getBoundingClientRect().width;
       const parentHeight = d.getBoundingClientRect().height;
-      canvas.width = parentWidth;
-      canvas.height = parentHeight;
+      if (sizeToParent) canvas.width = parentWidth;
+      if (sizeToParent) canvas.height = parentHeight;
     };
     if (sizeToParent) {
       window.addEventListener("resize", onResize, true);

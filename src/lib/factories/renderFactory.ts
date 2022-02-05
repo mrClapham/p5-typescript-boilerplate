@@ -6,13 +6,14 @@ import { IDraw } from "lib/interfaces";
 const renderFactory = (
   renderer: (canvas: HTMLCanvasElement) => () => void,
   target: string,
-  width = 200,
-  height = 200,
+  config: IGenericConfig,
   sizeToParent = true,
   optClassName: string | null = null,
-  config: IGenericConfig
+  width = 200,
+  height = 200,
 ): IDraw => {
-  console.log('Render factory')
+  console.log('target ', target)
+
   const canvas: HTMLCanvasElement = createCanvas(
     target,
     width,

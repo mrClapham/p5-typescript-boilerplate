@@ -1,10 +1,10 @@
 import { IShape } from "lib/interfaces";
 import { rgbaColor } from "lib/color";
 
-const width = 40;
-const height = 40;
+// const width = 40;
+// const height = 40;
 
-export default (ctx: CanvasRenderingContext2D): Function => (
+export default (ctx: CanvasRenderingContext2D): () => void => (
   config: IShape = {
     x: 10,
     y: 10,
@@ -12,7 +12,10 @@ export default (ctx: CanvasRenderingContext2D): Function => (
     height: 10,
     color: { r: 0, g: 255, b: 255, a: 0.5 },
     rotation: 45,
-    render: () => {},
+    render: () => {
+      //
+      console.log('render')
+    }
   }
 ) => {
   //const { x, y, width, height, color, rotation } = config;

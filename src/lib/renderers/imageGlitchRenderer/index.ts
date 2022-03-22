@@ -1,3 +1,4 @@
+import perlinNoise3d from 'perlin-noise-3d';
 import { alladin } from './alladin';
 // import TwoByThree from './twoby4'
 
@@ -57,10 +58,35 @@ const initialConfig = {
   rotation: 45,
   red: 0,
   col: "#ff00ff",
+  pixelDrift: 15,
   imageUrl: alladin
 };
 
+const glitchArray = (array: IDotArray[][], start: number, end: number, offset = 200): IDotArray[][] => {
+  return array.map((d, i) => {
+    if (i >= start && i <= end) {
+      const cols = ['r', 'g', 'b']
+      const randomCol = 'r'
+      return d.map(dd => ({ ...dd, x: dd.x + offset, r: 0 }))
+    } else {
+      return d
+    }
+
+  });
+}
+
 const imageGlitchRenderer = (canvas: HTMLCanvasElement): (() => void) => {
+
+  const noiseRed = new perlinNoise3d();
+  const noiseGreen = new perlinNoise3d();
+  const noiseBlue = new perlinNoise3d();
+
+
+  let noiseStepRed = Math.random();
+  let noiseStepGreen = Math.random();
+  let noiseStepBlue = Math.random();
+
+  const noiseIncrement = 0.1
 
   const context: CanvasRenderingContext2D = canvas.getContext(
     "2d"
@@ -69,15 +95,12 @@ const imageGlitchRenderer = (canvas: HTMLCanvasElement): (() => void) => {
   let currentImage = initialConfig.imageUrl;
   let img: CanvasImageSource | null = null;
 
-
   let imHeight = 0;
   let imWidth = 0;
 
   let imgData: ImageData | null;
   let dotArray: IDotArray[][] = [];
   let currentDotSize = 20;
-
-
 
   const loadImage = (i: string) => {
     console.log("loading image")
@@ -94,52 +117,44 @@ const imageGlitchRenderer = (canvas: HTMLCanvasElement): (() => void) => {
         canvas.width = imWidth
         canvas.height = imHeight
 
-        // console.log("imWidth: ", imWidth)
-        // console.log("imHeight: ", imHeight)
-        // console.log(canvas);
-
-        // console.log('sizeToParent ', config)
-        // canvas.width = imWidth;
-        // canvas.height = imHeight
-
         context.clearRect(0, 0, imWidth, imHeight);
         img && context.drawImage(img, 0, 0, imWidth, imHeight);
         imgData = context.getImageData(0, 0, imWidth, imHeight);
         imgData ? dotArray = makeDotArray(imgData, currentDotSize) : dotArray = [];
-        console.log(" dotArray ", dotArray)
       }
     });
     currentImage = i;
   };
 
-  //loadImage(initialConfig.imageUrl);
-  // loadImage(alladin);
 
   return (config = initialConfig): void => {
     const props = { ...initialConfig, ...config };
-    const { imageUrl, dotSize } = props;
+    const { imageUrl, dotSize, pixelDrift } = props;
     currentDotSize = dotSize;
     if (imageUrl !== currentImage) {
       context.clearRect(0, 0, 10000, 10000);
       loadImage(imageUrl);
-    } else {
-      //console.log('IMAGE NOT CHANGED')
-      //console.log(props.imageUrl)
-      // img && context.drawImage(img, 0, 0, imWidth, imHeight);
     }
 
     try {
       context.clearRect(0, 0, 10000, 10000);
       const offset = 60;
-      // img && context.drawImage(img, 0, 0, imWidth, imHeight);
       if (imgData) {
 
+        noiseStepRed += noiseIncrement;
+        noiseStepGreen += noiseIncrement;
+        noiseStepBlue += noiseIncrement;
 
-        const redOffset = Math.random() * 14
-        const greenOffset = Math.random() * 4
-        const bluenOffset = Math.random() * 4
-        dotArray.forEach((d: IDotArray[]) => {
+        const redOffset = noiseRed.get(noiseStepRed) * pixelDrift;
+        const greenOffset = noiseGreen.get(noiseStepGreen) * pixelDrift;
+        const bluenOffset = noiseBlue.get(noiseStepBlue) * pixelDrift;
 
+        const maxGlitch = 4
+        const glitchStart = Math.ceil(Math.random() * dotArray.length - maxGlitch);
+        const glitchEnd = Math.ceil(Math.random() * glitchStart + maxGlitch);
+        const glitchOffset = Math.ceil(Math.random() * 15)
+
+        glitchArray(dotArray, glitchStart, glitchEnd, glitchOffset).forEach((d: IDotArray[]) => {
 
           d.forEach((dd: IDotArray) => {
             const { x, y, r, g, b, size } = dd;
@@ -155,7 +170,6 @@ const imageGlitchRenderer = (canvas: HTMLCanvasElement): (() => void) => {
 
             // Green
             const circleG = new Path2D();
-
             circleG.arc(x + size + greenOffset, y + offset, size / 2, 0, 2 * Math.PI, false);
             context.fillStyle = `rgba(0, 255, 0, ${g / 255})` // `rgba(${r},${g},${b},1)`;
             context.fill(circleG);

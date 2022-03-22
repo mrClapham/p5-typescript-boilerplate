@@ -19,7 +19,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const root: HTMLElement = document.querySelector("#root") as HTMLElement;
   if (root) {
-    const config = { width: 1000, dotSize: 20, imageUrl: 'https://i2-prod.mirror.co.uk/incoming/article25556419.ece/ALTERNATES/s1200d/1_Portrait-of-British-Short-hair-blue-cat-with-yellow-eyes.jpg' }
+    const config = { width: 1000, dotSize: 50, imageUrl: 'https://i2-prod.mirror.co.uk/incoming/article25556419.ece/ALTERNATES/s1200d/1_Portrait-of-British-Short-hair-blue-cat-with-yellow-eyes.jpg' }
     const ss = imageGlitchSketch(config, 'root');
     console.log(ss);
     // setTimeout(

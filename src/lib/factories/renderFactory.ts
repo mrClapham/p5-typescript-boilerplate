@@ -14,6 +14,8 @@ const renderFactory = (
 ): IDraw => {
   console.log('target ', target)
 
+  console.log("HHHHHHHHHHHH")
+
   const canvas: HTMLCanvasElement = createCanvas(
     target,
     width,

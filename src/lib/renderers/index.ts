@@ -1,1 +1,1 @@
-export * from "./simpleCircleRenderer";
+export * from "./imageGlitchRenderer";

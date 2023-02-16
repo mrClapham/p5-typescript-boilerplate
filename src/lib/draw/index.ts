@@ -12,7 +12,7 @@ let _config: IDrawConfig = {
  */
 const draw = (
   render: (config?: IDrawConfig) => void,
-  config: IGenericConfig
+  config: IGenericConfig ={}
 ): IDraw => {
   _config = { ..._config, ...config };
   let request: number;

@@ -7,7 +7,7 @@ import { mousePositionListener } from "lib/listeners";
  *
  * @param context CanvasRenderingContext2D
  */
-const render: () => void = (canvas: HTMLCanvasElement) => {
+const render = (canvas: HTMLCanvasElement): ()=> void => {
   let mouseX = 0;
   let mouseY = 0;
   const context: CanvasRenderingContext2D = canvas.getContext("2d") as CanvasRenderingContext2D; //as CanvasRenderingContext2D;
@@ -32,8 +32,8 @@ const simpleMouseTrack = (
 ): IDraw => {
   const canvas: HTMLCanvasElement = createCanvas(target, width, height, true);
 
-  const { pause, play } = draw(render(canvas, {}));
-  return { pause, play };
+  const { pause, play, update } = draw(render(canvas));
+  return { pause, play, update };
 };
 
 export { simpleMouseTrack };

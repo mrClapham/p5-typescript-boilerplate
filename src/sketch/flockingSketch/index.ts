@@ -29,7 +29,8 @@ const defaultConfig = {
     fill: 'rgba(95,95,0,1)',
     stroke: 'rgba(65,65,85,1)',
     backgroundfill: 'rgba(0,0,0,.02)',
-    strokeWeight: 1
+    strokeWeight: 1,
+    maxspeed: 5
 };
 
 // export const createAttractorGrid = (width = 100, height = 100, xDivs = 10, yDivs = 10): { x: number, y: number }[][] => {

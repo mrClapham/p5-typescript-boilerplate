@@ -8,12 +8,4 @@
 // export * from "sketch";
 export * from "./lib/algos";
 export { flockingSketch } from './sketch/flockingSketch'
-
-// export * from "./lib/simpleMouseTrack";
-
-export const hello = 'Hello world';
-export const testExport = (x: string): string => `Hello world ${x}`;
-
-export default {
-    hello, testExport
-}
+export { noiseOrbitSketch  } from './sketch/noiseOrbitSketch'

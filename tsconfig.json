@@ -2,21 +2,41 @@
   "compilerOptions": {
     "target": "es5",
     "module": "commonjs",
-    "lib": ["es2017", "es7", "es6", "dom"],
+    "lib": [
+      "es2017",
+      "es7",
+      "es6",
+      "dom"
+    ],
     "declaration": true,
     "outDir": "library",
     "strict": true,
     "esModuleInterop": true,
     "baseUrl": "src",
     "paths": {
-      "lib": ["lib/*"],
-      "p5": ["node_modules/p5/lib/p5.js"]
-    }
+      "lib": [
+        "lib/*"
+      ],
+      "p5": [
+        "node_modules/p5/lib/p5.js"
+      ]
+    },
+    "typeRoots": [
+      "./typings",
+      "./node_modules/@types/"
+    ]
   },
-  "include": ["src"],
+  "exclude": [
+    "node_modules",
+    "typings"
+  ],
+  "include": [
+    "src"
+  ],
   "exclude": [
     "node_modules",
     "dist",
     "library"
-  ]
+  ],
+  "noImplicitAny": false
 }

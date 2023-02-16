@@ -60,6 +60,7 @@
     "@types/p5": "^0.9.1",
     "p5": "^1.2.0",
     "perlin-noise-3d": "^0.5.4",
+    "sass": "^1.58.1",
     "sketch": "^0.2.0"
   },
   "repository": {

@@ -50,6 +50,6 @@ document.addEventListener("DOMContentLoaded", () => {
     // );
 
      //const noiseOrbitSketchInstance = new p5(noiseOrbitSketch({ width: 1000, height: 1000 }), root);
-     const _flockingSketch = new p5(flockingSketch({ width: 1000, height: 1000 }), root);
+     const _flockingSketch = new p5(flockingSketch({ width: 1000, height: 1000,  }), root);
   }
 });

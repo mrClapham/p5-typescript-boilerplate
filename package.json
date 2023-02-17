@@ -25,7 +25,7 @@
     "semantic-release": "^20.1.0",
     "ts-jest": "^29.0.5",
     "ts-loader": "^9.2.4",
-    "ts-node": "^9.0.0",
+    "ts-node": "^10.9.1",
     "tsconfig-paths-webpack-plugin": "^3.5.1",
     "typedoc": "^0.21.4",
     "typescript": "^4.3.5",
@@ -64,7 +64,8 @@
     "@types/p5": "^0.9.1",
     "p5": "^1.2.0",
     "perlin-noise-3d": "^0.5.4",
-    "sketch": "^0.2.0"
+    "sketch": "^0.2.0",
+    "ts-node-dev": "^2.0.0"
   },
   "repository": {
     "type": "git",

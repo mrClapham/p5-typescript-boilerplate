@@ -6,6 +6,9 @@
   "types": "library/index.d.ts",
   "author": "Graham Clapham",
   "license": "MIT",
+  "engines": {
+    "node": ">=18"
+  },
   "devDependencies": {
     "@babel/plugin-proposal-class-properties": "^7.12.1",
     "@babel/preset-env": "^7.15.8",

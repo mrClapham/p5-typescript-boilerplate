@@ -7,7 +7,7 @@
   "author": "Graham Clapham",
   "license": "MIT",
   "engines": {
-    "node": "18.x"
+    "node": "19.x"
   },
   "devDependencies": {
     "@babel/plugin-proposal-class-properties": "^7.12.1",

@@ -3,12 +3,12 @@ version: 2
 defaults:
   working_directory: ~/repo
   docker:
-    - image: circleci/node:16.15.0
+    - image: cimg/node:12.16
 jobs:
   test:
     working_directory: ~/repo
     docker:
-      - image: circleci/node:16.15.0
+      - image: cimg/node:12.16
     steps:
       - checkout
       - restore_cache:
@@ -29,7 +29,7 @@ jobs:
   deploy:
     working_directory: ~/repo
     docker:
-      - image: circleci/node:16.15.0
+      - image: cimg/node:12.16
     steps:
       - attach_workspace:
           at: ~/repo

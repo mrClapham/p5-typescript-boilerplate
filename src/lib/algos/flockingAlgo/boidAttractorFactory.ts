@@ -1,4 +1,4 @@
-import { IBoid, IBoidAttractor, IBoidAttractorConfig } from 'lib/interfaces';
+import { IBoid, IBoidAttractor, IBoidAttractorConfig } from '../../../lib/interfaces';
 import { Vector } from 'p5';
 
 const defaultConfig: IBoidAttractorConfig = {

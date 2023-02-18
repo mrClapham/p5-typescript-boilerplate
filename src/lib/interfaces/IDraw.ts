@@ -1,4 +1,4 @@
-import { IGenericConfig } from "lib/interfaces/IGenericConfig";
+import { IGenericConfig } from "../../lib/interfaces/IGenericConfig";
 
 export interface IDraw {
   play: () => void;

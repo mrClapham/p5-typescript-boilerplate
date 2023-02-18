@@ -1,4 +1,4 @@
-import { IColor } from "lib/interfaces";
+import { IColor } from "../../lib/interfaces";
 export interface IColorRampElement extends IColor {
   rgba: string
 }

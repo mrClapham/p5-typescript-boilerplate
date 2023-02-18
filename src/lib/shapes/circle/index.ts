@@ -1,5 +1,5 @@
-import { IShape } from "lib/interfaces";
-import { rgbaColor } from "lib/color";
+import { IShape } from "../../../lib/interfaces";
+import { rgbaColor } from "../../../lib/color";
 
 // const width = 40;
 // const height = 40;

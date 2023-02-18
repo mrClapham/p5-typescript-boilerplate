@@ -1,1 +1,1 @@
-export * from 'lib/shapes/circle'
+export * from '../../lib/shapes/circle'

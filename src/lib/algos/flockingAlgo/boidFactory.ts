@@ -1,4 +1,4 @@
-import { IBoid, IBoidConfig, IRunConfig } from 'lib/interfaces';
+import { IBoid, IBoidConfig, IRunConfig } from '../../../lib/interfaces'
 import * as p5 from "p5";
 import { Vector } from "p5";
 

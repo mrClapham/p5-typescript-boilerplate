@@ -1,5 +1,5 @@
 import { Vector } from "p5";
-import { IPoints3d } from 'lib/interfaces/IPoints3d';
+import { IPoints3d } from '../../lib/interfaces/IPoints3d';
 import { IBoid } from './IBoid';
 import { IBoidAttractor } from './IBoidAttractor';
 import { IBoidAttractorConfig } from './IBoidAttractorConfig';

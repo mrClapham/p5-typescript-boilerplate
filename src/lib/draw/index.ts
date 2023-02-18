@@ -1,5 +1,5 @@
-import { IDraw, IDrawConfig } from "lib/interfaces/IDraw";
-import { IGenericConfig } from "lib/interfaces/IGenericConfig";
+import { IDraw, IDrawConfig } from "../../lib/interfaces/IDraw";
+import { IGenericConfig } from "../../lib/interfaces/IGenericConfig";
 
 let _config: IDrawConfig = {
   width: 800,

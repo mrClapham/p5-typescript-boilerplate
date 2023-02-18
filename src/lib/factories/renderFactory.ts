@@ -1,7 +1,7 @@
-import createCanvas from "lib/createCanvas";
-import { draw } from "lib/draw";
-import { IGenericConfig } from "lib/interfaces/IGenericConfig";
-import { IDraw } from "lib/interfaces";
+import createCanvas from "../../lib/createCanvas";
+import { draw } from "../../lib/draw";
+import { IGenericConfig } from "../../lib/interfaces/IGenericConfig";
+import { IDraw } from "../../lib/interfaces";
 
 const renderFactory = (
   renderer: (canvas: HTMLCanvasElement) => () => void,

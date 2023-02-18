@@ -1,7 +1,7 @@
-import createCanvas from "lib/createCanvas";
-import { draw } from "lib/draw";
-import { IDraw } from "lib/interfaces";
-import { mousePositionListener } from "lib/listeners";
+import createCanvas from "../../lib/createCanvas";
+import { draw } from "../../lib/draw";
+import { IDraw } from "../../lib/interfaces";
+import { mousePositionListener } from "../../lib/listeners";
 
 /**
  *

@@ -1,5 +1,5 @@
 import * as p5 from 'p5';
-import { createColoursArray } from 'lib/color';
+import { createColoursArray } from 'lib';
 
 
 const colorsArray = createColoursArray({ r: 255, g: 0, b: 255, a: 1 }, { r: 255, g: 0, b: 0, a: 1 }, 40)
